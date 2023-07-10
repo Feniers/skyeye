@@ -54,9 +54,9 @@ export default {
     },
     mounted() {
         //发送异步请求,获取数据
-        axios.get("http://yapi.smart-xwork.cn/mock/169327/emp/list").then((result) => {  //此地址是无用的，这里的地址提供人员信息
-            this.tableData = result.data.data;
-        });
+        // axios.get("http://yapi.smart-xwork.cn/mock/169327/emp/list").then((result) => {  //此地址是无用的，这里的地址提供人员信息
+        //     this.tableData = result.data.data;
+        // });
     }
 }
 </script>

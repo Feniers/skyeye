@@ -8,7 +8,8 @@ const router = new VueRouter({
   routes: [
     { path: '/', redirect: '/login' },
 
-    { path: '/layout', component: () => import('@/views/layout') },
+    // { path: '/layout', component: () => import('@/views/layout') },
+    { path: '/layout',redirect:'/'},
     { path: '/login', component: () => import('@/views/login/index') },
     { path: '/register', component: () => import('@/views/register/index') },
     

@@ -78,7 +78,7 @@ import Vue from 'vue'
 import VueParticles from 'vue-particles'
 Vue.use(VueParticles)
 import SIdentify from './verify.vue';
-import {register} from'@/api/register';
+import { register } from '@/api/register';
 // import { encrypt } from '@/utils/rsaEncrypt'
 // import identify from '@/views/verifyCode/index.vue'
 export default {
@@ -103,46 +103,18 @@ export default {
             identifyCode: '',
 
             rules: {
-                email: [{
-                    required: true,
-                    type: 'email',
-                    message: '请输入邮箱',
-                    trigger: 'blur'
-                }],
-                username: [{
-                    required: true,
-                    type: 'string',
-                    message: '请输入姓名',
-                    trigger: 'blur'
-                }],
-                nickname: [{
-                    required: true,
-                    type: 'string',
-                    message: '请输入昵称',
-                    trigger: 'blur'
-                }],
-                code: [{
-                    required: true,
-                    type: 'string',
-                    message: '请输入验证码',
-                    trigger: 'blur'
-                }],
+                email: [{ required: true, type: 'email', message: '请输入邮箱', trigger: 'blur' }],
+                username: [{ required: true, type: 'string', message: '请输入姓名', trigger: 'blur' }],
+                nickname: [{ required: true, type: 'string', message: '请输入昵称', trigger: 'blur' }],
+                code: [{ required: true, type: 'string', message: '请输入验证码', trigger: 'blur' }],
                 pwd: [
-                    {
-                        required: true,
-                        message: '创建密码',
-                        trigger: 'blur'
-                    },
+                    { required: true, message: '创建密码', trigger: 'blur' },
                     {
                         pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,20}$/,
                         message: '密码必须同时包含数字与字母,且长度为 6-20位'
                     }],
                 cpwd: [
-                    {
-                        required: true,
-                        message: '确认密码',
-                        trigger: 'blur'
-                    },
+                    { required: true, message: '确认密码', trigger: 'blur' },
                     {
                         validator: (rule, value, callback) => {
                             if (value === '') {
@@ -180,7 +152,6 @@ export default {
             return Math.floor(Math.random() * (max - min) + min)
         },
 
-
         // 用户注册
         register: function () {
             //验证码验证
@@ -208,7 +179,7 @@ export default {
                         email: this.ruleForm.email,
                         password: this.ruleForm.pwd,
                         userface: null,
-                        regtime: aData.getFullYear() + "-" + month + "-" + aData.getDate() + " " + aData.getHours() + ":" + aData.getMinutes() + ":" + aData.getSeconds()
+                        // regtime: aData.getFullYear() + "-" + month + "-" + aData.getDate() + " " + aData.getHours() + ":" + aData.getMinutes() + ":" + aData.getSeconds()
                     }
 
                     // debugger
@@ -224,11 +195,10 @@ export default {
                             this.$router.push('/login')
                         }, 2000)
                     }).catch(err => {
-
                         //promise遭拒，运行时到此停止
-                        this.$router.push('/')
-
+                        // this.$router.push('/')
                         // this.$message.error(err.response.data.message)
+                        this.$message.error("错误")
                         // console.log(err.response.data.message)
                     })
                 }

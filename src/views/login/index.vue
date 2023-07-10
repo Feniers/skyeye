@@ -28,31 +28,32 @@
                         </el-form-item>
                     </el-form>
                 </el-tab-pane>
-
-                <el-tab-pane label="手机验证登录">
-                    <!-- 手机验证登录表单 -->
-                    <el-form ref="phoneLoginFormRef" :model="phoneLoginForm" :rules="phoneLoginFormRules">
-                        <!-- 手机号 -->
-                        <el-form-item prop="phone">
-                            <el-input placeholder="手机号" clearable prefix-icon="el-icon-phone"
-                                v-model="phoneLoginForm.phone">
+                <el-tab-pane label="邮箱验证登录">
+                    <!-- 邮箱验证登录表单 -->
+                    <el-form ref="emailLoginFormRef" :model="emailLoginForm" :rules="emailLoginFormRules">
+                        <!-- 邮箱 -->
+                        <el-form-item prop="email">
+                            <el-input placeholder="邮箱" clearable prefix-icon="el-icon-message"
+                                v-model="emailLoginForm.email">
                             </el-input>
                         </el-form-item>
-                        <!-- 手机验证码 -->
-                        <el-form-item prop="phoneCode">
-                            <el-input placeholder="验证码" prefix-icon="el-icon-key" v-model="phoneLoginForm.phoneCode">
+                        <!-- 邮箱验证码 -->
+                        <el-form-item prop="emailCode">
+                            <el-input placeholder="验证码" prefix-icon="el-icon-key" v-model="emailLoginForm.emailCode">
                                 <template #append>
-                                    <el-button>获取验证码</el-button>
+                                    <el-button :disabled="disabled" @click="getEmailValidateCode">{{ buttonText }}
+                                    </el-button>
                                 </template>
                             </el-input>
                         </el-form-item>
                         <!-- 按钮区域 -->
                         <el-form-item class="login_btns">
-                            <el-button type="primary" @click="phoneLogin">登录</el-button>
-                            <el-button type="success" @click='toRegister'>注册</el-button>
+                            <el-button type="primary" @click="emailLogin">登录</el-button>
+                            <el-button type="primary" @click='toRegister'>注册</el-button>
                         </el-form-item>
                     </el-form>
                 </el-tab-pane>
+
             </el-tabs>
         </div>
         <div class="login_footer">
@@ -65,6 +66,7 @@
 <script>
 import Vue from 'vue'
 import store from '@/store'
+import axios from 'axios'
 
 export default {
     name: 'LoginIndex',
@@ -83,14 +85,14 @@ export default {
                 callback()
             }
         }
-        // 验证手机号的规则
-        const validatePhone = (rule, value, cb) => {
-            // 验证手机号的正则表达式
-            const regMobile = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/
-            if (regMobile.test(value)) {
+        var validateEmail = (rule, value, cb) => {
+            // 验证邮箱的正则表达式
+            const regEmail = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/
+            if (regEmail.test(value)) {
+                // 合法的邮箱
                 return cb()
             }
-            cb(new Error('请输入合法的手机号'))
+            cb(new Error('请输入合法的邮箱'))
         }
 
         return {
@@ -104,17 +106,22 @@ export default {
                 password: [{ required: true, message: '请输入你的密码', trigger: 'blur', validator: validatePassword }]
             },
 
-            phoneLoginForm: {
-                phone: '',
-                phoneCode: ''
+            emailLoginForm: {
+                email: '',
+                emailCode: ''
             },
-            phoneLoginFormRules: {
-                phone: [{ required: true, message: '请输入你的手机号', trigger: 'blur', validator: validatePhone }],
-                phoneCode: [{ required: true, message: '请输入你的验证码', trigger: 'blur' }],
-                loading: false,
+            emailLoginFormRules: {
+                email: [{required: true, message: '请输入你的邮箱', trigger: 'blur', validator: validateEmail}],
+                emailCode: [{required: true,message: '请输入你获取到的验证码',trigger: 'blur'}]
             },
 
-            loading: false
+            loading: false,
+
+            // 控制获取验证码
+            buttonText: '获取验证码',
+            disabled: false,
+            duration: 60,
+            timer: null
         }
 
     },
@@ -129,7 +136,7 @@ export default {
     methods: {
         pwdLogin() {
             // debugger
-            console.log(this.pwdLoginForm.username)
+            // console.log(this.pwdLoginForm.username)
             //表单验证
             this.$refs.pwdLoginFormRef.validate(valid => {
                 //将username保存到 Vue 实例的原型对象上，以便在其他组件中访问
@@ -137,7 +144,7 @@ export default {
                 if (valid) {
                     // debugger
                     //在这里使用axio与后端对接,获得账号密码键值对,然后匹配,查看是否能够登录
-                    if (this.pwdLoginForm.password == '111111') {
+                    if (this.pwdLoginForm.password == 'qwe123123') {
                         this.loading = true
                         Vue.prototype.$userName = this.pwdLoginForm.username;
                         //store中的逻辑
@@ -176,14 +183,27 @@ export default {
                 }
             })
         },
-        phoneLogin() {
-            this.$refs.phoneLoginForm.validate(valid => {
-                //获得验证码，与输入比对
-                //成功
-                this.$router.push({ path: this.redirect || '/' })
-                console.log('跳转后的路由地址:', this.$route.fullPath)
+
+        emailLogin(){},
+        
+        // 获取邮箱验证码
+        getEmailValidateCode(){
+            this.$refs.emailLoginFormRef.validate(valid => {
+                //将username保存到 Vue 实例的原型对象上，以便在其他组件中访问
+                // Vue.prototype.$userName = this.pwdLoginForm.username;
+                if (valid) {
+                    //在这里使用axio与后端对接,获得账号密码键值对,然后匹配,查看是否能够登录
+                    
+                }
+                //invaild
+                else {
+                    console.log('error submit!!')
+                    return false
+                }
             })
         },
+
+
         toRegister() {
             this.$router.push('/register')
         },
@@ -240,11 +260,13 @@ export default {
 }
 
 .el-tabs>>>.el-tabs__item:hover {
-    color: #fff;   /**这里改变鼠标移至选中项后颜色变化：黑-》白 */
+    color: #fff;
+    /**这里改变鼠标移至选中项后颜色变化：黑-》白 */
     cursor: pointer;
 }
 
-.el-tabs>>>.el-tabs__item.is-active {   /**这里用来改变登录页头选中后颜色变化 黑-》紫 */
+.el-tabs>>>.el-tabs__item.is-active {
+    /**这里用来改变登录页头选中后颜色变化 黑-》紫 */
     color: #c915e5;
 }
 
@@ -265,7 +287,8 @@ export default {
 }
 
 .el-input>>>.el-input__inner {
-    background-color: rgba(225, 225, 225, 0); /**这里改变输入框底色 */
+    background-color: rgba(225, 225, 225, 0);
+    /**这里改变输入框底色 */
     box-shadow: 0 0 2px #fff;
     border: 1px solid #fff;
 }

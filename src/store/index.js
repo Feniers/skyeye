@@ -5,6 +5,7 @@ import getters from './getters'
 
 import user from './modules/user'
 import api from './modules/api'
+// import settings from './modules/settings'
 
 Vue.use(Vuex)
 
