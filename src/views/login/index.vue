@@ -139,7 +139,7 @@ export default {
             console.log(this.pwdLoginForm.username)
             //表单验证
             this.$refs.pwdLoginFormRef.validate(valid => {
-                //将username保存到 Vue 实例的原型对象上，以便在其他组件中访问
+                //将username保存到 Vue 实例的原型对象上，以便在其他组件中访问 lll
                 Vue.prototype.$userName = this.pwdLoginForm.username;
                 if (valid) {
                     // debugger
