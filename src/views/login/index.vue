@@ -4,7 +4,7 @@
             <img />
         </div>
         <div class="login_box">
-            <!-- 登录表单区域 -->
+            <!-- 登录表单区域 --> <!--hfinv -->
             <el-tabs :stretch="true">
                 <el-tab-pane label="账号密码登录">
                     <!-- 账号密码登录表单 -->
@@ -136,7 +136,7 @@ export default {
     methods: {
         pwdLogin() {
             // debugger
-            // console.log(this.pwdLoginForm.username)
+            console.log(this.pwdLoginForm.username)
             //表单验证
             this.$refs.pwdLoginFormRef.validate(valid => {
                 //将username保存到 Vue 实例的原型对象上，以便在其他组件中访问
