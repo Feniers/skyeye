@@ -78,7 +78,7 @@ import Vue from 'vue'
 import VueParticles from 'vue-particles'
 Vue.use(VueParticles)
 import SIdentify from './verify.vue';
-import {register} from'@/api/register';
+import { register } from '@/api/register';
 // import { encrypt } from '@/utils/rsaEncrypt'
 // import identify from '@/views/verifyCode/index.vue'
 export default {
@@ -226,10 +226,10 @@ export default {
                     }).catch(err => {
 
                         //promise遭拒，运行时到此停止
-                        this.$router.push('/')
+                        // this.$router.push('/')
 
-                        // this.$message.error(err.response.data.message)
-                        // console.log(err.response.data.message)
+                        this.$message.error(err.response.data.message)
+                        console.log(err.response.data.message)
                     })
                 }
             })

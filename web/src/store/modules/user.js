@@ -37,7 +37,7 @@ const actions = {
     login({ commit }, userInfo) {
         //解构赋值获取值
         const { username, password } = userInfo
-        debugger
+        // debugger
         return new Promise((resolve, reject) => {
             //使用 trim() 方法来去除用户名前后的空格，避免进一步处理中出现空格导致的问题。
             login({ username: username.trim(), password: password }).then(response => {

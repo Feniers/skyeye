@@ -145,7 +145,7 @@ export default {
                             () => {
                                 alert("登录成功")
                                 // this.$router.push({ path: this.redirect || '/' })
-                                this.$router.push('/layout')
+                                this.$router.push('/main')
                                 console.log('跳转后的路由地址:', this.$route.fullPath)
                                 this.loading = false
                             }
@@ -160,7 +160,7 @@ export default {
                         this.$store.dispatch('user/login', this.pwdLoginForm).then(
                             () => {
                                 alert("登录成功!")
-                                this.$router.push('/layout')
+                                this.$router.push('/main')
                                 console.log('跳转后的路由地址:', this.$route.fullPath)
                                 this.loading = false
                             }).catch(
