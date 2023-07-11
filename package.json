@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "core-js": "^3.31.1",
-    "dplayer": "^1.27.1",
-    "vue-video-player": "^6.0.0"
-  }
-}
