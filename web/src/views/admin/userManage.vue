@@ -53,7 +53,6 @@
                 </el-form-item>
             </el-form>
 
-
             <!-- 主要部分表格 -->
             <el-table :data="tableData" border style="width: 100%">
                 <el-table-column label="序号" type="index" width="100"> </el-table-column>
@@ -75,7 +74,7 @@
                 <el-table-column label="操作">
                     <template slot-scope="scope">
                         <el-button type="primary" @click="handleClick(scope.row)" size="mini">编辑</el-button>
-                        <el-button type="danger" @click="deleteUser" size="mini">删除</el-button>
+                        <el-button type="danger" @click="deleteUser(scope.row)" size="mini">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -124,15 +123,17 @@ export default {
     name: 'UserManageIndex',
     data() {
         return {
+            dialogChangeVisible:false,
+            formLabelWidth: '100px',
 
-            form: [],
-            searchText: [{
+            form: {},
+            searchText: {
                 name: '',
                 nickname: '',
                 email: '',
                 id: '',
                 right: ''
-            }], // 搜索关键字
+            }, // 搜索关键字
             tableData: [], // 表格数据
             page: [{
                 page_no: 1, // 当前页码
@@ -164,8 +165,8 @@ export default {
                 });
         },
 
-        getUserInfo(id) {
-            getInfoById(id)
+        getUserInfo(userId) {
+            getInfoById({id:userId})
                 .then(response => {
                     this.form = response.data;
                     console.log(this.form);
@@ -176,12 +177,12 @@ export default {
         },
 
         handleClick(row) {
-            debugger
+            // debugger
             const id = row.id;
             console.log(id);
-            getUserInfo(id);
+            this.getUserInfo(id);
 
-            dialogChangeVisible = true;
+            this.dialogChangeVisible = true;
         },
         changeUser() {
             changeUser(this.form)
@@ -191,13 +192,14 @@ export default {
                         message: '修改成功',
                         type: 'success'
                     })
+                    this.dialogChangeVisible=false
                 })
                 .catch(error => {
                     this.$message.error("修改失败：" + error);
                 })
         },
 
-        deleteUser() {
+        deleteUser(row) {
             const id = row.id;
             deleteUser(id)
             .then(res => {

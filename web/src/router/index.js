@@ -19,8 +19,8 @@ const router = new VueRouter({
       path: '/login',
       component: () => import('@/views/login/index.vue')
     },
-    // { path: '/', redirect: '/login' },
-    { path: '/', redirect: '/usermag' },
+    { path: '/', redirect: '/login' },
+    // { path: '/', redirect: '/usermag' },
     { path: '/register', component: () => import('@/views/register/index') },
 
     {
