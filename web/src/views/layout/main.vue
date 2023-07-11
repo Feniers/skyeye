@@ -1,84 +1,123 @@
 <!--此页面是主页面，显示内容为固定的头部栏和左侧菜单栏。其右下主要显示页面会变化-->
 <template>
-  <div>
+  <el-container class="home-container">
+    <!-- <el-header style="font-size:40px; background-color: rgb(45, 142, 152)">  -->
 
-    <el-container>
-      <el-header style="font-size:40px; background-color: rgb(238, 241, 246)"> SkyEye天目银行视频监测系统</el-header>
-      <el-container>
-        
-        <el-aside width="200px">
-          <el-menu :default-openeds="['1', '3']">
-            <el-submenu index="1">
-              <template slot="title"><i class="el-icon-message"></i>通用界面</template>
-              <el-menu-item index="1-1">实时视频监控</el-menu-item>
-              <el-menu-item index="1-2">报警信息查看</el-menu-item>
-            </el-submenu>
-            <el-submenu index="2">
-              <template slot="title"><i class="el-icon-message"></i>管理员界面</template>
-              <el-menu-item index="2-1"><router-link to="/usermag">用户权限管理</router-link> </el-menu-item>
-              <el-menu-item index="2-2"><router-link to="/tlist">人员白名单</router-link></el-menu-item>
-              <el-menu-item index="2-3">人员黑名单</el-menu-item>
-            </el-submenu>
-          </el-menu>
-        </el-aside>
+    <el-header>
+      <div>
+        <!-- <img src="../assets/logo.png" alt="logo" style="weight=10px;height=10px">   -->
+        <span class="tital">SkyEye天目银行视频监测系统</span>
+      </div>
+      <!-- 退出按钮 -->
+      <el-button class="logout-button" type="info" @click="logout">退出</el-button>
+    </el-header>
 
-        <el-main style="height: 700px; border: 1px solid #eee">
-          <router-view></router-view> <!--用于显示content中子页面内容-->
-        </el-main>
-      </el-container>
+    <el-container class="all-container">
+
+      <el-aside width="230px" style="border: 1px solid #eee">
+        <el-menu :default-openeds="['1', '3']">
+          <el-submenu index="1">
+            <template slot="title"><i class="el-icon-message"></i>通用界面</template>
+            <el-menu-item index="1-1"><router-link to="/moniter">实时视频监控</router-link></el-menu-item>
+            <el-menu-item index="1-2"><router-link to="/record">报警信息查看</router-link></el-menu-item>
+          </el-submenu>
+          <el-submenu index="2">
+            <template slot="title"><i class="el-icon-message"></i>管理员界面</template>
+            <el-menu-item index="2-1"><router-link to="/usermag">用户权限管理</router-link> </el-menu-item>
+            <el-menu-item index="2-2"><router-link to="/tlist">人员白名单</router-link></el-menu-item>
+            <el-menu-item index="2-3"><router-link to="/blist">人员黑名单</router-link></el-menu-item>
+          </el-submenu>
+        </el-menu>
+      </el-aside>
+
+      <el-main class="main-container">
+        <router-view></router-view> <!--用于显示content中子页面内容-->
+      </el-main>
     </el-container>
 
-
-  </div>
+  </el-container>
 </template>
 
-<script> //ydh part
+<script>
+//ydh part
+// import { logout } from '@/api/user'
+export default {
+  methods: {
+    logout() {
+      this.$store.dispatch('user/logout').then(() => {
+        this.$router.push('/');
+        alert("注销成功")
+      }).catch(() => {
+        this.$message.error('注销失败');
+      })
+    }
+  }
+}
 </script>
 
-<style>
-html, body {
-  height: 100%;
-  margin: 0;
+<style scoped >
+/* // 标签的名字就是类的名字 */
+.home-container {
+  display: flex;
+  height: 100vh;
 }
 
-.el-container {
-  height: 100%;
+.all-container {
+  height: 100vh;
 }
 
+.main-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
 
-.el-header,
-.el-footer {
-  background-color: #B3C0D1;
-  color: #333;
-  text-align: center;
-  line-height: 60px;
+.el-header {
+  background-color: #373D41;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 0px;
+  /* //  居中 */
+  align-items: center;
+  /* //  文本颜色 */
+  color: #fff;
+  /* // 文字大小 */
+  font-size: 20px;
+}
+
+.el-header .logo {
+  display: flex;
+  align-items: center;
+}
+
+.el-header .logo img {
+  height: 40px;
+  /* 根据需求调整 Logo 图片高度大小 */
+  margin-right: 10px;
+  /* 根据需求调整 Logo 图片与标题之间的间距 */
+}
+
+.el-header .title {
+  font-weight: bold;
+  /* 可调整标题文字的字重 */
+}
+
+.el-header .logout-button {
+  margin-left: 10px;
+  /* 根据需求调整退出按钮与标题之间的间距 */
 }
 
 .el-aside {
-  background-color: #D3DCE6;
-  color: #333;
-  text-align: center;
-  /* line-height: 200px; */
-  line-height: 100%;
+  /* display: flex; */
+  height: 100%;
+  background-color: #333744;
 }
 
 .el-main {
-  background-color: #E9EEF3;
-  color: #333;
-  text-align: center;
-  line-height: 160px;
-}
-
-/* body>.el-container {
-  margin-bottom: 40px;
-} */
-
-.el-container:nth-child(5) .el-aside,
-.el-container:nth-child(6) .el-aside {
-  line-height: 260px;
-}
-
-.el-container:nth-child(7) .el-aside {
-  line-height: 320px;
-}
-</style>
+  /* display: flex; */
+  height: 100vh;
+  background-color: #EAEDF1;
+}</style>

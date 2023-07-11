@@ -27,7 +27,7 @@ const router = new VueRouter({
       //主界面
       path: '/main',
       component: () => import('@/views/layout/main.vue'),
-      // redirect:'/usermag',
+      redirect:'/moniter',
       children: [
         // { //管理员
         //   path: '/admin',
@@ -53,15 +53,15 @@ const router = new VueRouter({
         //   redirect: 'moniter',
         //   children: [
             {
-              path: 'miniter',
+              path: '/moniter',
               component: () => import('@/views/layout/vedioView.vue')
             },
             {
-              path: 'record',
+              path: '/record',
               component: () => import('@/views/layout/VedioInfoView.vue')
             },
             {
-              path: 'recordD',
+              path: '/recordD',
               component: () => import('@/views/layout/VedioInfoViewD.vue')
             }
           // ]
@@ -87,5 +87,7 @@ const router = new VueRouter({
 
   ]
 })
+
+
 
 export default router

@@ -1,23 +1,5 @@
 <template>  <!--此页面提供系统进入后的页面，其中显示页面为【人员白名单】页面-->
     <div>
-        <!--<el-container  style="height: 700px; border: 1px solid #eee"> 头部标题栏
-            <el-header style="font-size:40px; background-color: rgb(238, 241, 246)"> SkyMu天目银行视频监测系统</el-header>
-            <el-container>
-                <el-aside width="230px" style="border: 1px solid #eee"> 侧边栏
-                    <el-menu :default-openeds="['1', '3']">
-                        <el-submenu index="1">
-                            <template slot="title"><i class="el-icon-message"></i>通用界面</template>
-                            <el-menu-item index="1-1">实时视频监控</el-menu-item>
-                            <el-menu-item index="1-2">报警信息查看</el-menu-item>
-                        </el-submenu>
-                        <el-submenu index="2">
-                            <template slot="title"><i class="el-icon-message"></i>管理员界面</template>
-                            <el-menu-item index="2-1">用户权限管理</el-menu-item>
-                            <el-menu-item index="2-2">人员白名单</el-menu-item>
-                            <el-menu-item index="2-3">人员黑名单</el-menu-item>
-                        </el-submenu>
-                    </el-menu>
-                </el-aside>-->
 
                 <el-main>
                     <!-- 头部表单 -->
@@ -88,7 +70,7 @@
 <script> 
 import axios from 'axios'; 
 export default {
-    name:'EmpView.Index',
+    name:'EmpViewIndex',
     data() {
         return {
             tableData: [],

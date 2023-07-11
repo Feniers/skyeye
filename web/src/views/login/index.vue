@@ -66,6 +66,7 @@
 import Vue from 'vue'
 import store from '@/store'
 
+
 export default {
     name: 'LoginIndex',
     data() {
@@ -159,6 +160,7 @@ export default {
                         this.loading = true
                         this.$store.dispatch('user/login', this.pwdLoginForm).then(
                             () => {
+
                                 alert("登录成功!")
                                 this.$router.push('/main')
                                 console.log('跳转后的路由地址:', this.$route.fullPath)

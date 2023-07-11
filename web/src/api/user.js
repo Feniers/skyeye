@@ -8,6 +8,20 @@ export function login(data) {
   })
 }
 
+export function checkToken() {
+  return request({
+    url: '/user/check_token',
+    method: 'post',
+  })
+}
+
+export function logout() {
+  return request({
+    url: '/user/logout',
+    method: 'post',
+  })
+}
+
 //分页查询
 export function index(data) {
   return request({
