@@ -9,9 +9,9 @@
         <span class="tital">SkyEye天目银行视频监测系统</span>
       </div>
       <!-- 退出按钮 -->
-      <!-- <el-button class="logout-button" type="info" @click="logout">退出</el-button> -->
+      <el-button class="logout-button" type="info" @click="logout">退出</el-button>
 
-      <el-dropdown>
+      <!-- <el-dropdown>
         <span class="avatar-dropdown">
           <img class="avatar" :src="userfaceSrc" alt="avatar">
           <i class="el-icon-arrow-down el-icon--right"></i>
@@ -20,7 +20,7 @@
           <el-dropdown-item @click="goToProfile">个人信息</el-dropdown-item>
           <el-dropdown-item @click="logout">注销</el-dropdown-item>
         </el-dropdown-menu>
-      </el-dropdown>
+      </el-dropdown> -->
     </el-header>
 
     <el-container class="all-container">

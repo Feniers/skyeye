@@ -19,8 +19,20 @@
                 </el-form-item>
             </el-form>
 
+            <br>
+
+            <!-- 面包屑 -->
+            <el-breadcrumb separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item v-for="item in breadcrumbItems" :key="item.path">
+                    <span @click="getDirectory(item.path)">{{ item.label }}</span>
+                </el-breadcrumb-item>
+            </el-breadcrumb>
+
+            <br>
+
+
             <el-table :data="tableData" border style="overflow: auto">
-                <el-table-column width="1000px   " v-for="(column, index) in columns" :key="index" :label="column.label">
+                <el-table-column width="900px   " v-for="(column, index) in columns" :key="index" :label="column.label">
                     <template slot-scope="scope">
                         <span>{{ scope.row[column.key] }}</span>
                     </template>
@@ -66,7 +78,11 @@ export default {
                 { label: '日期', key: 'key' },
                 // { label: '状态', key: 'type' },
                 // { label: '列3', key: 'md5' }
-            ] // 列配置数组
+            ], // 列配置数组
+
+            breadcrumbItems:[
+                {label:'all',path:''},
+            ]
         }
     },
     methods: {
@@ -91,9 +107,9 @@ export default {
                     // if (typeof item.key === 'string' && regex.test(item.key)) {
                     //     filteredData.push(item);
                     // }
-                    if(item.key.endsWith('.mp4')){
+                    if (item.key.endsWith('.mp4')) {
                         continue
-                    }else{
+                    } else {
                         filteredData.push(item);
                     }
                 }
@@ -122,6 +138,9 @@ export default {
             else {
                 // this.getDirectory(row.key)
                 directory({ prefix: row.key }).then(res => {
+                    //面包屑
+                    this.breadcrumbItems.push({label:row.key,path:row.key})
+
                     const data = res.data;
 
                     const filteredData = [];

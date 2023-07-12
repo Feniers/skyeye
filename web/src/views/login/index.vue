@@ -68,7 +68,7 @@ import store from '@/store'
 
 
 export default {
-    name: 'LoginIndex',
+    // name: 'LoginIndex',
     data() {
         const validateUsername = (rule, value, callback) => {
             if (!value) {
