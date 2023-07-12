@@ -5,6 +5,7 @@ import { getToken, setToken, removeToken } from '@/utils/auth'
 const getDefaultState = () => {
     return {
         token: getToken(),
+        id:'',
         name: '',
         enable: '',
         avatar: ''
@@ -29,6 +30,9 @@ const mutations = {
     },
     SET_AVATAR: (state, avatar) => {
         state.avatar = avatar
+    },
+    SET_ID: (state, id) => {
+        state.id = id
     }
 }
 

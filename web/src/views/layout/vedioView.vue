@@ -25,7 +25,9 @@
 export default {
     data() {
         return {
-            videosrc: "http://rxh8bkp1a.hd-bkt.clouddn.com/video7.mp4?e=1688964653&token=8O1Cf39AS9FKQjhWkMi2sFH2pkSXgF8O38XREvzH:vSLOgJLXO7LWOVdOmTa5PHdur_Q="
+            // videosrc: "http://rxh8bkp1a.hd-bkt.clouddn.com/video7.mp4?e=1688964653&token=8O1Cf39AS9FKQjhWkMi2sFH2pkSXgF8O38XREvzH:vSLOgJLXO7LWOVdOmTa5PHdur_Q="
+            // videosrc:"http://172.20.10.8:5000/video_feed"
+            videosrc:"http://172.17.0.2:8080/video_feed"
         }
     },
     methods: {

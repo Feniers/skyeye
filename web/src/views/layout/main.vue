@@ -9,7 +9,18 @@
         <span class="tital">SkyEye天目银行视频监测系统</span>
       </div>
       <!-- 退出按钮 -->
-      <el-button class="logout-button" type="info" @click="logout">退出</el-button>
+      <!-- <el-button class="logout-button" type="info" @click="logout">退出</el-button> -->
+
+      <el-dropdown>
+        <span class="avatar-dropdown">
+          <img class="avatar" :src="userfaceSrc" alt="avatar">
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item @click="goToProfile">个人信息</el-dropdown-item>
+          <el-dropdown-item @click="logout">注销</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </el-header>
 
     <el-container class="all-container">
@@ -24,7 +35,7 @@
           <el-submenu index="2">
             <template slot="title"><i class="el-icon-message"></i>管理员界面</template>
             <el-menu-item index="2-1"><router-link to="/usermag">用户权限管理</router-link> </el-menu-item>
-            <el-menu-item index="2-2"><router-link to="/tlist">人员白名单</router-link></el-menu-item>
+            <!-- <el-menu-item index="2-2"><router-link to="/tlist">人员白名单</router-link></el-menu-item> -->
             <el-menu-item index="2-3"><router-link to="/blist">人员黑名单</router-link></el-menu-item>
           </el-submenu>
         </el-menu>
@@ -42,14 +53,25 @@
 //ydh part
 // import { logout } from '@/api/user'
 export default {
+  data(){
+    return{
+      userfaceSrc:"../assets/tupian.jpg"
+    }
+  },
   methods: {
     logout() {
+      // alert('点击注销按钮')
+      console.log('点击注销按钮')
+      debugger
       this.$store.dispatch('user/logout').then(() => {
         this.$router.push('/');
         alert("注销成功")
       }).catch(() => {
         this.$message.error('注销失败');
       })
+    },
+    goToProfile(){
+      console.log('点击个人信息按钮')
     }
   }
 }
@@ -58,22 +80,36 @@ export default {
 <style scoped >
 /* // 标签的名字就是类的名字 */
 .home-container {
-  display: flex;
+  /* display: flex; */
+  width: 100vw;
   height: 100vh;
+  overflow: hidden;
 }
 
 .all-container {
   height: 100vh;
+  overflow: hidden;
 }
 
 .main-container {
   width: 100vw;
   height: 100vh;
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   align-items: center;
   overflow: hidden;
 }
+
+.router-link-active {
+  text-decoration: none;
+  color: rgb(206, 114, 8);
+}
+
+a {
+  text-decoration: none;
+  color: rgb(3, 0, 0);
+}
+
 
 .el-header {
   background-color: #373D41;
@@ -120,4 +156,5 @@ export default {
   /* display: flex; */
   height: 100vh;
   background-color: #EAEDF1;
-}</style>
+}
+</style>

@@ -8,7 +8,7 @@
         </div> -->
         <article class="header">
             <header>
-                <el-avatar icon="el-icon-user-solid" shape="circle" />
+                <el-avatar icon="el-icon-user-solid" shape="circle" /> 
                 <span class="login">
                     <em class="bold">已有账号？</em>
                     <a href="/login">
@@ -20,7 +20,7 @@
         <section class="'form'">
             <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px" autocomplete="off"
                 :hide-required-asterisk="true" size="medium" class="form">
-                <div style="padding-top: 10px">
+                <div style="padding-top: 20px">
                     <el-form-item label="昵称" prop="nickname">
                         <el-col :span="18">
                             <el-input v-model="ruleForm.nickname" placeholder="请输入您的昵称" />
@@ -30,6 +30,11 @@
                     <el-form-item label="姓名" prop="username">
                         <el-col :span="18">
                             <el-input v-model="ruleForm.username" placeholder="请输入您的姓名" />
+                        </el-col>
+                    </el-form-item>
+                    <el-form-item label="电话" prop="phone">
+                        <el-col :span="18">
+                            <el-input v-model="ruleForm.phone" placeholder="请输入电话" />
                         </el-col>
                     </el-form-item>
                     <el-form-item label="邮箱" prop="email">
@@ -96,7 +101,8 @@ export default {
                 email: '123@163.com',
                 code: '',
                 pwd: '123456q',
-                cpwd: '123456q'
+                cpwd: '123456q',
+                phone:'18787566829'
             },
 
             identifyCodes: '1234567890abcdefjhijklinopqrsduvwxyz',//随机串内容
@@ -154,7 +160,14 @@ export default {
                             }
                         },
                         trigger: 'blur'
-                    }]
+                    }],
+                phone: [
+                    {
+                        required: true,
+                        message: '确认密码',
+                        trigger: 'blur'
+                    }
+                ]
             },
         }
     },
@@ -203,11 +216,12 @@ export default {
                     console.log(month);
 
                     const user = {
-                        username: this.ruleForm.username,
+                        name: this.ruleForm.username,
                         nickname: this.ruleForm.nickname,
                         email: this.ruleForm.email,
                         password: this.ruleForm.pwd,
                         userface: null,
+                        phone:this.ruleForm.phone,
                         regtime: aData.getFullYear() + "-" + month + "-" + aData.getDate() + " " + aData.getHours() + ":" + aData.getMinutes() + ":" + aData.getSeconds()
                     }
 
@@ -228,8 +242,8 @@ export default {
                         //promise遭拒，运行时到此停止
                         // this.$router.push('/')
 
-                        this.$message.error(err.response.data.message)
-                        console.log(err.response.data.message)
+                        this.$message.error(err.response.data.msg)
+                        console.log(err.response.data.msg)
                     })
                 }
             })
@@ -266,7 +280,7 @@ $cursor: #fff;
 
 .form {
     background: #111111;
-    height: 495px;
+    height: 550px;
     width: 500px;
     opacity: 0.75;
     position: absolute;

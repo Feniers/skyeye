@@ -96,8 +96,8 @@ export default {
 
         return {
             pwdLoginForm: {
-                username: 'gxc',
-                password: 'qwe123123'
+                username: 'yhd',
+                password: '123456q'
             },
             pwdLoginFormRules: {
                 username: [{ required: true, message: '请输入你的账号', trigger: 'blur', validator: validateUsername }],
