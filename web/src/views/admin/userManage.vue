@@ -1,8 +1,9 @@
 <template>
     <!--此页面是【用户信息管理页面】-->
-    <div>
-        <el-main class="main-container">
-            <!-- <el-main > -->
+    <div class="main-container">
+        <!-- <el-main > -->
+        <!-- <el-main > -->
+        <div class="form">
             <el-form :inline="true" :model="searchText" class="demo-form-inline">
                 <el-form-item label="姓名">
                     <el-input v-model="searchText.name" placeholder="name"></el-input>
@@ -21,8 +22,11 @@
                     <el-button type="primary" @click="handleClickAdd">新增</el-button>
                 </el-form-item>
             </el-form>
+        </div>
 
-            <!-- 主要部分表格 -->
+
+        <!-- 主要部分表格 -->
+        <div class="table">
             <el-table :data="tableData" border style="width: 100%">
                 <el-table-column label="序号" type="index" width="100"> </el-table-column>
                 <el-table-column prop="id" label="id"></el-table-column>
@@ -47,86 +51,89 @@
                     </template>
                 </el-table-column>
             </el-table>
+        </div>
 
-            <br>
 
+        <br>
+
+        <div class="pagination">
             <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
                 :current-page="page.page_no" :page-sizes="[5, 10, 15, 20]" :page-size="page.page_size"
                 layout="total, sizes, prev, pager, next, jumper" :total="page.table">
             </el-pagination>
+        </div>
 
-            <el-dialog title="修改用户信息" :visible.sync="dialogChangeVisible">
-                <el-form :model="form">
-                    <el-form-item label="姓名" :label-width="formLabelWidth">
-                        <el-input v-model="form.name" autocomplete="off"></el-input>
+
+        <el-dialog title="修改用户信息" :visible.sync="dialogChangeVisible">
+            <el-form :model="form">
+                <el-form-item label="姓名" :label-width="formLabelWidth">
+                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="昵称" :label-width="formLabelWidth">
+                    <el-input v-model="form.nickname" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="邮箱" :label-width="formLabelWidth">
+                    <el-input v-model="form.email" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="权限" :label-width="formLabelWidth">
+                    <el-select v-model="form.right" placeholder="请选择权限">
+                        <el-option label="管理员" value="0"></el-option>
+                        <el-option label="员工" value="1"></el-option>
+                        <el-option label="浏览人员" value="2"></el-option>
+                    </el-select>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogChangeVisible = false">取 消</el-button>
+                <el-button type="primary" @click="changeUser">确 定</el-button>
+            </div>
+        </el-dialog>
+
+        <el-dialog title="新增用户" :visible.sync="dialogAddVisible" class="addDialog">
+            <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px" autocomplete="off"
+                :hide-required-asterisk="true" size="medium" class="form">
+                <div style="padding-top: 10px">
+                    <el-form-item label="昵称" prop="nickname">
+                        <el-col :span="18">
+                            <el-input v-model="ruleForm.nickname" placeholder="请输入昵称" />
+                        </el-col>
                     </el-form-item>
-                    <el-form-item label="昵称" :label-width="formLabelWidth">
-                        <el-input v-model="form.nickname" autocomplete="off"></el-input>
+
+                    <el-form-item label="姓名" prop="name">
+                        <el-col :span="18">
+                            <el-input v-model="ruleForm.name" placeholder="请输入姓名" />
+                        </el-col>
                     </el-form-item>
-                    <el-form-item label="邮箱" :label-width="formLabelWidth">
-                        <el-input v-model="form.email" autocomplete="off"></el-input>
+                    <el-form-item label="密码" prop="password">
+                        <el-col :span="18">
+                            <el-input v-model="ruleForm.password" placeholder="请输入密码" />
+                        </el-col>
                     </el-form-item>
-                    <el-form-item label="权限" :label-width="formLabelWidth">
-                        <el-select v-model="form.right" placeholder="请选择权限">
-                            <el-option label="管理员" value="0"></el-option>
-                            <el-option label="员工" value="1"></el-option>
-                            <el-option label="浏览人员" value="2"></el-option>
-                        </el-select>
+                    <el-form-item label="邮箱" prop="email">
+                        <el-col :span="18">
+                            <el-input v-model="ruleForm.email" placeholder="请输入邮箱" />
+                        </el-col>
                     </el-form-item>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                    <el-button @click="dialogChangeVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="changeUser">确 定</el-button>
+                    <el-form-item label="电话" prop="phone">
+                        <el-col :span="18">
+                            <el-input v-model="ruleForm.phone" placeholder="请输入电话" />
+                        </el-col>
+                    </el-form-item>
+                    <el-form-item label="权限" prop="right">
+                        <el-col :span="18">
+                            <el-input v-model="ruleForm.right" placeholder="请设置权限" />
+                        </el-col>
+                    </el-form-item>
                 </div>
-            </el-dialog>
+            </el-form>
 
-            <el-dialog title="新增用户" :visible.sync="dialogAddVisible" class="addDialog">
-                <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px" autocomplete="off"
-                    :hide-required-asterisk="true" size="medium" class="form">
-                    <div style="padding-top: 10px">
-                        <el-form-item label="昵称" prop="nickname">
-                            <el-col :span="18">
-                                <el-input v-model="ruleForm.nickname" placeholder="请输入昵称" />
-                            </el-col>
-                        </el-form-item>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogAddVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addUser">确 定</el-button>
+            </div>
+        </el-dialog>
 
-                        <el-form-item label="姓名" prop="name">
-                            <el-col :span="18">
-                                <el-input v-model="ruleForm.name" placeholder="请输入姓名" />
-                            </el-col>
-                        </el-form-item>
-                        <el-form-item label="密码" prop="password">
-                            <el-col :span="18">
-                                <el-input v-model="ruleForm.password" placeholder="请输入密码" />
-                            </el-col>
-                        </el-form-item>
-                        <el-form-item label="邮箱" prop="email">
-                            <el-col :span="18">
-                                <el-input v-model="ruleForm.email" placeholder="请输入邮箱" />
-                            </el-col>
-                        </el-form-item>
-                        <el-form-item label="电话" prop="phone">
-                            <el-col :span="18">
-                                <el-input v-model="ruleForm.phone" placeholder="请输入电话" />
-                            </el-col>
-                        </el-form-item>
-                        <el-form-item label="权限" prop="right">
-                            <el-col :span="18">
-                                <el-input v-model="ruleForm.right" placeholder="请设置权限" />
-                            </el-col>
-                        </el-form-item>
-                    </div>
-                </el-form>
-
-                <div slot="footer" class="dialog-footer">
-                    <el-button @click="dialogAddVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="addUser">确 定</el-button>
-
-                </div>
-
-            </el-dialog>
-
-        </el-main>
+        <!-- </el-main> -->
 
     </div>
 </template>
@@ -308,7 +315,7 @@ export default {
                         this.$message.error("新增失败" + error)
                     })
                 }
-                else{
+                else {
                     this.$message.error('请正确填写信息')
                 }
 
@@ -323,8 +330,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.addDialog{
+.addDialog {
     height: 100vh;
 }
 
@@ -332,9 +338,13 @@ export default {
     width: 100vw;
     height: 100vh;
     /* display: flex; */
-    justify-content: center;
-    align-items: center;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    /* 将子元素垂直排列 */
+    // align-items: center;
+    /* 在交叉轴上居中对齐 */
+
 }
 
 .el-header {

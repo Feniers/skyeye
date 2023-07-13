@@ -64,7 +64,7 @@
 
 <script>
 import Vue from 'vue'
-import store from '@/store'
+// import store from '@/store'
 
 
 export default {
@@ -96,8 +96,10 @@ export default {
 
         return {
             pwdLoginForm: {
-                username: 'yhd',
-                password: '123456q'
+                // username: 'yhd',
+                // password: '123456q'
+                username: 'gxc',
+                password: 'qwe123123'
             },
             pwdLoginFormRules: {
                 username: [{ required: true, message: '请输入你的账号', trigger: 'blur', validator: validateUsername }],
@@ -146,7 +148,8 @@ export default {
                             () => {
                                 alert("登录成功")
                                 // this.$router.push({ path: this.redirect || '/' })
-                                this.$router.push('/main')
+                                // this.$router.push('/main')
+                                this.$router.push('/home')
                                 console.log('跳转后的路由地址:', this.$route.fullPath)
                                 this.loading = false
                             }
@@ -162,7 +165,8 @@ export default {
                             () => {
 
                                 alert("登录成功!")
-                                this.$router.push('/main')
+                                // this.$router.push('/main')
+                                this.$router.push('/home')
                                 console.log('跳转后的路由地址:', this.$route.fullPath)
                                 this.loading = false
                             }).catch(

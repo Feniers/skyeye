@@ -1,5 +1,6 @@
 import { login, logout, getInfo, checkToken } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
+import getters from '../getters'
 // import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
@@ -8,7 +9,8 @@ const getDefaultState = () => {
         id:'',
         name: '',
         enable: '',
-        avatar: ''
+        avatar: '',
+        right:[]
     }
 }
 
@@ -33,6 +35,9 @@ const mutations = {
     },
     SET_ID: (state, id) => {
         state.id = id
+    },
+    SET_RIGHT: (state, right) => {
+        state.right = right
     }
 }
 
@@ -50,12 +55,18 @@ const actions = {
                 // removeToken();
 
                 const { data } = response
+                commit('SET_ID',data.userId)
                 commit('SET_TOKEN', data.token)
+                commit('SET_RIGHT',data.role_list)
+
+                console.log("data.role_list"+data.role_list)
+                console.log("right"+getters.right)
+
                 setToken(data.token)
 
                 console.log(getToken())
 
-                resolve()
+                resolve(data)
 
                 // checkToken().then(res => {
                 //     resolve()

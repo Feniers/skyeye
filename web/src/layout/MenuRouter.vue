@@ -1,18 +1,20 @@
 <template>
+    <!-- 侧边栏 -->
     <div>
-        <el-submenu :key="item.path" :index="item.path" v-if="item.children">
+        <el-submenu :index="item.path" v-if="item.children">
             <template slot="title">
                 <i :class="item.iconClass"></i>
                 <span>{{ item.name }}</span>
             </template>
-            <MenuRouter v-for="child in item.children" :key="child.path" :item="child">
-            </MenuRouter>
+            <el-menu-item v-for="child in item.children" :index="child.path" :key="child.path">
+                <router-link :to="child.path" :class="{ 'active': isActive(child.path) }">{{ child.name }}</router-link>
+            </el-menu-item>
         </el-submenu>
 
-        <el-menu-item :index="item.path" v-else>
+        <router-link :to="item.path" v-else :class="{ 'active': isActive(item.path) }">
             <i :class="item.iconClass"></i>
             <span slot="title">{{ item.name }}</span>
-        </el-menu-item>
+        </router-link>
     </div>
 </template>
  
@@ -30,6 +32,27 @@ export default {
         return {
         }
     },
+    methods: {
+        isActive(path) {
+            return this.$route.path === path;
+        }
+    }
 }
 
 </script>
+
+<style scoped>
+.active {
+    background-color: #f0f0f0;
+}
+
+.router-link-active {
+    text-decoration: none;
+    color: rgb(236, 137, 9);
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+</style>
