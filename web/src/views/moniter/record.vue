@@ -30,7 +30,6 @@
 
             <br>
 
-
             <el-table :data="tableData" border style="overflow: auto">
                 <el-table-column width="900px   " v-for="(column, index) in columns" :key="index" :label="column.label">
                     <template slot-scope="scope">

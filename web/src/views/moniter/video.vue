@@ -1,5 +1,8 @@
 <template>
     <div class="cell">
+        <!-- <div>
+            <img :src="src" alt="hhh" >
+        </div> -->
 
         <div class="cell-player">
             <div :class="cellClass(i)" v-for="i in cellCount" :key="i">
@@ -13,6 +16,7 @@
                 </template>
             </div>
         </div>
+        
         <div class="cell-tool">
             <div class="bk-button-group">
                 <el-button @click="cellCount = 1" size="small">1</el-button>
@@ -24,9 +28,9 @@
         </div>
     </div>
 </template>
-  
+
 <script>
-import playVideo from '@/views/layout/playVideo.vue'
+import playVideo from '@/views/moniter/playVideo.vue'
 
 export default {
     components: {
@@ -34,18 +38,18 @@ export default {
     },
     data() {
         return {
+            // src: "http://rxh8bkp1a.hd-bkt.clouddn.com/video7.mp4?e=1688964653&token=8O1Cf39AS9FKQjhWkMi2sFH2pkSXgF8O38XREvzH:vSLOgJLXO7LWOVdOmTa5PHdur_Q=",
             videoInfo: [
                 { url: "", index: 0, name: "测试1" },
-                { url: "http://rxh8bkp1a.hd-bkt.clouddn.com/video7.mp4?e=1688964653&token=8O1Cf39AS9FKQjhWkMi2sFH2pkSXgF8O38XREvzH:vSLOgJLXO7LWOVdOmTa5PHdur_Q=", index: 1, name: "测试1" },
-                { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded3180d81.m3u8", index: 2, name: "测试2" },
-                { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a7s25d84ded3180d81.m3u8", index: 3, name: "测试3" },
-                { url: "http://hls01open.ys7.com/openlive/b27fa374e9d749ddb22bs4a12e843a3131.m3u8", index: 10, name: "测试4" },
-                { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a7s2s5d84ded3180d8.m3u8", index: 4, name: "测试5" },
-                { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded3180d8.m3u8", index: 5, name: "测试6" },
-                { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded31280d8.m3u8", index: 6, name: "测试7" },
-                { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded33180d8.m3u8", index: 7, name: "测试8" },
-                { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded31480d8.m3u8", index: 8, name: "测试9" },
-
+                { url: "http://i-2.gpushare.com:58614/video_feed", index: 1, name: "测试1" },
+                { url: "http://i-1.gpushare.com:52553/video_feed", index: 2, name: "测试2" },
+                { url: "http://i-2.gpushare.com:21421/video_feed", index: 3, name: "测试3" },
+                { url: "http://i-2.gpushare.com:25314/video_feed", index: 10, name: "测试4" },
+                // { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a7s2s5d84ded3180d8.m3u8", index: 4, name: "测试5" },
+                // { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded3180d8.m3u8", index: 5, name: "测试6" },
+                // { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded31280d8.m3u8", index: 6, name: "测试7" },
+                // { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded33180d8.m3u8", index: 7, name: "测试8" },
+                // { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded31480d8.m3u8", index: 8, name: "测试9" },
             ],
             cellCount: 4
         }

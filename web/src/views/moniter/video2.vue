@@ -26,7 +26,7 @@
 </template>
   
 <script>
-import playVideo from '@/views/layout/playVideo.vue'
+import playVideo from '@/views/moniter/playVideo.vue'
 
 export default {
     components: {
@@ -36,7 +36,7 @@ export default {
         return {
             videoInfo: [
                 { url: "", index: 0, name: "测试1" },
-                { url: "http://rxh8bkp1a.hd-bkt.clouddn.com/video7.mp4?e=1688964653&token=8O1Cf39AS9FKQjhWkMi2sFH2pkSXgF8O38XREvzH:vSLOgJLXO7LWOVdOmTa5PHdur_Q=", index: 1, name: "测试1" },
+                { url: "http://127.0.0.1:80/video_feed", index: 1, name: "测试1" },
                 { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded3180d81.m3u8", index: 2, name: "测试2" },
                 { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a7s25d84ded3180d81.m3u8", index: 3, name: "测试3" },
                 { url: "http://hls01open.ys7.com/openlive/b27fa374e9d749ddb22bs4a12e843a3131.m3u8", index: 10, name: "测试4" },

@@ -17,3 +17,11 @@ export function getUrl(data) {
         data
     })
 }
+
+export function getIRs(data) {
+    return request({
+        url: '/record/all',
+        method: 'post',
+        data
+    })
+}

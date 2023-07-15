@@ -42,9 +42,9 @@ export default {
 </script>
 
 <style scoped>
-.active {
-    background-color: #f0f0f0;
-}
+/* .active {
+    background-color: #373D41;
+} */
 
 .router-link-active {
     text-decoration: none;

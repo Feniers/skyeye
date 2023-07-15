@@ -246,11 +246,13 @@ export default {
 }
 
 .el-tabs>>>.el-tabs__item:hover {
-    color: #fff;   /**这里改变鼠标移至选中项后颜色变化：黑-》白 */
+    color: #fff;
+    /**这里改变鼠标移至选中项后颜色变化：黑-》白 */
     cursor: pointer;
 }
 
-.el-tabs>>>.el-tabs__item.is-active {   /**这里用来改变登录页头选中后颜色变化 黑-》紫 */
+.el-tabs>>>.el-tabs__item.is-active {
+    /**这里用来改变登录页头选中后颜色变化 黑-》紫 */
     color: #c915e5;
 }
 
@@ -271,7 +273,8 @@ export default {
 }
 
 .el-input>>>.el-input__inner {
-    background-color: rgba(225, 225, 225, 0); /**这里改变输入框底色 */
+    background-color: rgba(225, 225, 225, 0);
+    /**这里改变输入框底色 */
     box-shadow: 0 0 2px #fff;
     border: 1px solid #fff;
 }

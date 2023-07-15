@@ -44,7 +44,7 @@
                 <!-- <el-table-column prop="job" label="职位" width="140"></el-table-column> -->
                 <!-- <el-table-column prop="right" label="权限"></el-table-column> -->
                 <!-- <el-table-column prop="updatetime" label="最后操作时间" width="230"></el-table-column> -->
-                <el-table-column label="操作">
+                <el-table-column label="操作" flex-direction:row>
                     <template slot-scope="scope">
                         <el-button type="primary" @click="handleClick(scope.row)" size="mini">编辑</el-button>
                         <el-button type="danger" @click="deleteUser(scope.row)" size="mini">删除</el-button>
@@ -140,7 +140,7 @@
 
 <script>
 import { index, getInfoById, changeUser, deleteUser } from '@/api/user'
-import { register } from '@/api/register';
+import { addUser } from '@/api/register';
 export default {
     name: 'UserManageIndex',
     data() {
@@ -307,7 +307,7 @@ export default {
         addUser() {
             this.$refs.ruleForm.validate((valid) => {
                 if (valid) {
-                    register(this.ruleForm).then(res => {
+                    addUser(this.ruleForm).then(res => {
                         this.$message.success('新增成功')
                         this.dialogAddVisible = false
                         this.queryTable();
@@ -337,7 +337,7 @@ export default {
 .main-container {
     width: 100vw;
     height: 100vh;
-    /* display: flex; */
+    display: flex; 
     overflow: hidden;
     display: flex;
     flex-direction: column;

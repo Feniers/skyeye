@@ -18,6 +18,7 @@ const state = getDefaultState()
 
 const mutations = {
     RESET_STATE: (state) => {
+        alert(重置状态)
         Object.assign(state, getDefaultState())
     },
     SET_TOKEN: (state, token) => {
@@ -45,11 +46,11 @@ const actions = {
     //user login
     login({ commit }, userInfo) {
         //解构赋值获取值
-        const { username, password } = userInfo
+        const { name, password } = userInfo
         // debugger
         return new Promise((resolve, reject) => {
             //使用 trim() 方法来去除用户名前后的空格，避免进一步处理中出现空格导致的问题。
-            login({ name: username.trim(), password: password }).then(response => {
+            login({ name: name.trim(), password: password }).then(response => {
                 // debugger
                 // console.log(getToken())
                 // removeToken();
@@ -67,14 +68,6 @@ const actions = {
                 console.log(getToken())
 
                 resolve(data)
-
-                // checkToken().then(res => {
-                //     resolve()
-                // }).catch(error => {
-                //     removeToken()
-                //     reject(error)
-
-                // })
 
             }).catch(error => {
                 reject(error)

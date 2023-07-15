@@ -9,17 +9,24 @@
             </div>
             <!-- 退出按钮 -->
             <!-- <el-button class="logout-button" type="info" @click="logout">退出</el-button> -->
+            <div>
+                <el-dropdown>
+                    <span class="avatar-dropdown">
+                        <!-- <img class="avatar" :src="userfaceSrc" alt="avatar"> -->
+                        <!-- <img class="avatar" src="../assets/background/registerbg.jpg" alt="avatar"> -->
+                        <i class="el-icon-arrow-down el-icon--right"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <router-link to="/person">
+                            <el-dropdown-item>个人信息</el-dropdown-item>
+                        </router-link>
 
-            <!-- <el-dropdown>
-        <span class="avatar-dropdown">
-          <img class="avatar" :src="userfaceSrc" alt="avatar">
-          <i class="el-icon-arrow-down el-icon--right"></i>
-        </span>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item @click="goToProfile">个人信息</el-dropdown-item>
-          <el-dropdown-item @click="logout">注销</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown> -->
+                        <el-dropdown-item @click.native="logout">注销</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </div>
+
+
         </el-header>
 
         <el-container class="main-container">
@@ -43,11 +50,8 @@
 </template>
 
 <script>
-// import getters from '@/store/getters';
 import MenuRouter from './MenuRouter.vue';
-// import user from '@/store/modules/user';
 
-// import {router} from '../router/index'
 export default {
     name: 'Layout',
     components: { MenuRouter },
@@ -56,45 +60,71 @@ export default {
             menus: []
         }
     },
+    methods: {
+        logout() {
+            // alert('点击注销按钮')
+            console.log('点击注销按钮')
+            debugger
+            this.$store.dispatch('user/logout').then(() => {
+                this.$router.push('/');
+                alert("注销成功")
+            }).catch(() => {
+                this.$message.error('注销失败');
+            })
+        },
+    },
+
     created() {
         // debugger
-        // const right=user.state.right;
-        // console.log(1+[...this.$router.options.routes])
-        // console.log(2+this.$router.getters.right)
-        // console.log(3+user.state.right)
+        const right = this.$store.state.user.right;
 
-        // this.menus = this.$store.getters.right  //得到路由信息，就是index.js文件里面的路由信息可以打看查看
-        // const right=[...this.$store.state.right]
-        // if(right.includes("1")){
-            this.menus = [...this.$router.options.routes]  //得到路由信息，就是index.js文件里面的路由信息可以打看查看
-            // console.log("管理员"+this.menus);
-        // }
-        // else{
-            // this.menus = [...this.$router.options.routes].filter(route => route.path !== '/admin');
-            // console.log("用户"+this.menus);
-        // }
+        const user=this.$store.state.user
+        console.log("user "+user)
+        const routeList = [...this.$router.options.routes]  //得到路由信息，就是index.js文件里面的路由信息可以打看查看
+        // console.log("routeList "+routeList)
+
+        //如果不包含管理员权限
+        if (right.includes("0")) {
+            this.menus = routeList
+        } else {
+            this.menus = routeList.filter(route => route.path!=='/admin');
+        }
+        // console.log("menus "+this.menus)
     }
 }
+
+
 </script>
 
 <style scoped>
 .home-container {
-  height: 100vh; /* 设置容器的高度为视口高度 */
-  width: 100%; /* 设置容器的宽度为 100% */
-  display: flex; /* 使用 flex 布局 */
-  flex-direction: column; /* 设置主轴方向为垂直方向 */
-  overflow: hidden; /* 防止内容溢出时出现滚动条 */
+    height: 100vh;
+    /* 设置容器的高度为视口高度 */
+    width: 100%;
+    /* 设置容器的宽度为 100% */
+    display: flex;
+    /* 使用 flex 布局 */
+    flex-direction: column;
+    /* 设置主轴方向为垂直方向 */
+    overflow: hidden;
+    /* 防止内容溢出时出现滚动条 */
 }
 
 .main-container {
-  flex: 1; /* 占据剩余空间 */
-  display: flex; /* 使用 flex 布局 */
-  overflow: hidden; /* 防止内容溢出时出现滚动条 */
+    flex: 1;
+    /* 占据剩余空间 */
+    display: flex;
+    /* 使用 flex 布局 */
+    overflow: hidden;
+    /* 防止内容溢出时出现滚动条 */
 }
 
 .main {
-  flex: 1; /* 占据剩余空间 */
-  overflow: hidden; /* 内容溢出时显示滚动条 */
+    flex: 1;
+    /* 占据剩余空间 */
+    /* overflow: hidden; */
+    overflow: auto;
+    /* 内容溢出时显示滚动条 */
 }
 
 .header {
@@ -109,7 +139,7 @@ export default {
     /* // 文字大小 */
     font-size: 20px;
     position: relative;
-    /* width: 100%; */
+    width: 100%;
     /* height: 40px; */
 }
 
@@ -134,9 +164,18 @@ export default {
     border-right-width: 0;
 }
 
-
 span {
     margin-left: 4px;
+}
+
+.router-link-active {
+    text-decoration: none;
+    color: rgb(236, 137, 9);
+}
+
+a {
+    text-decoration: none;
+    color: white;
 }
 </style>
 

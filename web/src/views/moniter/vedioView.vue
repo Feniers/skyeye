@@ -2,16 +2,7 @@
 <template>
     <div class="container">
         <div class="image-container">
-            <img src="../assets/background.jpg" alt="1" class="fullscreen-image">
-        </div>
-        <div class="image-container">
-            <img src="../assets/loginbg.jpeg" alt="2" class="fullscreen-image">
-        </div>
-        <div class="image-container">
-            <img src="../assets/logo.png" alt="3" class="fullscreen-image">
-        </div>
-        <div class="image-container">
-            <img src="../assets/tupian.jpg" alt="4" class="fullscreen-image">
+            <img :src="src" alt="1" class="fullscreen-image">
         </div>
     </div>
 </template>

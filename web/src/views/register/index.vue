@@ -83,7 +83,7 @@ import Vue from 'vue'
 import VueParticles from 'vue-particles'
 Vue.use(VueParticles)
 import SIdentify from './verify.vue';
-import { register } from '@/api/register';
+import { addUser } from '@/api/register';
 // import { encrypt } from '@/utils/rsaEncrypt'
 // import identify from '@/views/verifyCode/index.vue'
 export default {
@@ -226,7 +226,7 @@ export default {
                     }
 
                     // debugger
-                    register(user).then(res => {
+                    addUser(user).then(res => {
                         console.log(res)
                         this.$message({
                             showClose: true,

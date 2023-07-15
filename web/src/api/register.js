@@ -1,9 +1,8 @@
 import request from '@/utils/request'
 
-export function register(data) {
+export function addUser(data) {
     return request({
         url: '/user/add',
-        // url:'',
         method: 'post',
         data
     })
