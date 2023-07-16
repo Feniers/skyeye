@@ -60,12 +60,12 @@ const actions = {
                 commit('SET_TOKEN', data.token)
                 commit('SET_RIGHT',data.role_list)
 
-                console.log("data.role_list"+data.role_list)
-                console.log("right"+getters.right)
+                // console.log("data.role_list",data.role_list)
+                // console.log("right",getters.right)
 
                 setToken(data.token)
 
-                console.log(getToken())
+                console.log("gettoken  ",getToken())
 
                 resolve(data)
 
@@ -98,9 +98,10 @@ const actions = {
     // },
 
     // user logout
-    logout({ commit, state }) {
+    logout({ commit }) {
+        // debugger
         return new Promise((resolve, reject) => {
-            logout(state.token).then(() => {
+            logout().then(() => {
                 removeToken() // must remove  token  first
                 // resetRouter()
                 commit('RESET_STATE')
@@ -110,6 +111,7 @@ const actions = {
             })
         })
     },
+
     // remove token
     resetToken({ commit }) {
         return new Promise(resolve => {

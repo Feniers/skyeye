@@ -24,29 +24,26 @@
             </el-table-column>
         </el-table>
 
-        <!-- <div class="image-container">
-            <img src="../assets/tupian.jpg" ref="image" @load="initializeCanvas" />
-            <canvas ref="canvas" @mousedown="startDrawing" @mouseup="endDrawing" @mousemove="drawRectangle"></canvas>
-        </div> -->
-
-        <!-- </div> -->
 
         <el-dialog :data="rowInfo" :visible.sync="dialogVisible" class="dialog" height="100%">
             <div class="canvas-container">
-                <img src="../assets/moniter.jpg" ref="image" @load="initializeCanvas" style="width: 100%;" />
-                <canvas class="canvas-overlay" ref="canvas" @mousedown="startDrawing" @mouseup="endDrawing"
-                    @mousemove="drawRectangle"></canvas>
+                <img src="http://127.0.0.1:80/video_feed" ref="image" @load="initializeCanvas" style="width: 100%;" />
+                <!-- <canvas class="canvas-overlay" ref="canvas" @mousedown="startDrawing" @mouseup="endDrawing"
+                    @mousemove="drawRectangle"></canvas> -->
+                <canvas class="canvas-overlay" ref="canvas" @mousedown="handleMouseDown"></canvas>
             </div>
             <div v-if="showCanves == true">
 
                 <el-button type="primary" @click="resetCanvas">重置画板</el-button>
                 <el-button type="primary" @click="innerVisible = true">提交警戒区</el-button>
-                <el-button type="info" size="medium" @click="dialogVisible = false; showCanves = false">取 消</el-button>
+                <!-- <el-button type="info" size="medium" @click="dialogVisible = false;">取 消</el-button> -->
+                <el-button type="info" size="medium" @click="quxiao">取 消</el-button>
             </div>
 
             <div v-else>
                 <el-button type="danger" size="medium" @click="deleteArea">删 除</el-button>
                 <el-button type="info" size="medium" @click="dialogVisible = false">取 消</el-button>
+                
             </div>
 
             <div>
@@ -83,19 +80,32 @@ export default {
             ],
             tableData: [],
 
-            canvas: null,
-            ctx: null,
+            // canvas: null,
+            // ctx: null,
             drawing: false,
             areaname: '',
-            start: false,
-            startX: '',
-            startY: '',
-            endX: '',
-            endY: '',
+            // start: false,
+            // startX: '',
+            // startY: '',
+            // // endX: '',
+            // // endY: '',
+            // currentX: 0,
+            // currentY: 0,
+
+            canvas: null,
+            context: null,
+            points: [],
+            sendPoints: []
             // imageSrc: 'path/to/your/image.jpg',
         }
     },
     methods: {
+        quxiao(){
+            debugger
+            this.dialogVisible=false
+            this.resetCanvas()
+        },
+
         //获取所有区域
         getArea() {
             getAllArea().then(res => {
@@ -131,76 +141,127 @@ export default {
             this.dialogVisible = true
             this.start = true
             this.showCanves = true
+            this.initializeCanvas();
+            // this.drawing = true
         },
-        //初始化画板
+
+        resetCanvas() {
+            // debugger
+            this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.points = []
+        },
+
         initializeCanvas() {
             this.canvas = this.$refs.canvas;
-            this.ctx = this.canvas.getContext('2d');
+            this.context = this.canvas.getContext('2d');
             this.canvas.width = this.$refs.image.clientWidth;
             this.canvas.height = this.$refs.image.clientHeight;
-            this.ctx.lineWidth = 2;
-            this.ctx.strokeStyle = '#ff0000';
         },
-        //重置画板
-        resetCanvas() {
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        },
-        startDrawing(event) {
-            if (this.start) {
-                this.drawing = true;
-            }
+
+        handleMouseDown(event) {
+            // debugger
             const rect = this.canvas.getBoundingClientRect();
-            this.startX = event.clientX - rect.left;
-            this.startY = event.clientY - rect.top;
-        },
-        endDrawing(event) {
-            if (this.drawing) {
-                const rect = this.canvas.getBoundingClientRect();
-                this.endX = event.clientX - rect.left;
-                this.endY = event.clientY - rect.top;
+            const mouseX = event.clientX - rect.left;
+            const mouseY = event.clientY - rect.top;
+            const point = { x: mouseX, y: mouseY };
+
+            // if (this.drawing === true) {
+            this.points.push(point);
+            // }
+
+
+            if (this.points.length >= 2) {
+                const lastPoint = this.points[this.points.length - 2];
+                this.drawLine(lastPoint, point);
+            }
+
+            if (this.points.length === 4) {
+                const firstPoint = this.points[0];
+                const lastPoint = this.points[this.points.length - 1];
+                this.drawLine(lastPoint, firstPoint);
                 this.drawing = false;
-                // this.sendRectangleCoordinates();
+
+                console.log("not send ", this.points)
+                this.resizePs()
+                console.log("send ", this.sendPoints)
+
+                console.log(this.points)
             }
         },
-        drawRectangle(event) {
-            if (!this.drawing) return;
-            const rect = this.canvas.getBoundingClientRect();
-            this.endX = event.clientX - rect.left;
-            this.endY = event.clientY - rect.top;
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            this.ctx.strokeRect(this.startX, this.startY, this.endX - this.startX, this.endY - this.startY);
+
+        drawLine(point1, point2) {
+            this.context.beginPath();
+            this.context.moveTo(point1.x, point1.y);
+            this.context.lineTo(point2.x, point2.y);
+            this.context.strokeStyle = 'red'; // 设置线条颜色为红色
+            this.context.stroke();
         },
-        //提交绘制
+
         sendRectangleCoordinates() {
-            debugger
-            const coordinates = {
-                areaname: this.areaname,
-                // x1: this.startX.toString(),
-                x1: (this.startX / this.canvas.width * 640).toString(),
-                y1: (this.startY / this.canvas.height * 480).toString(),
-                x2: (this.endX / this.canvas.width * 640).toString(),
-                y2: (this.endY / this.canvas.height * 480).toString(),
-            };
             // debugger
 
-            sendWA({
-                x1: (this.startX / this.canvas.width * 640).toString(),
-                y1: (this.startY / this.canvas.height * 480).toString(),
-                x2: (this.endX / this.canvas.width * 640).toString(),
-                y2: (this.endY / this.canvas.height * 480).toString(),
-            }).then(res => {
-                addArea(coordinates).then(res => {
-                    this.$message.success('划定警戒区域成功')
-                    this.resetCanvas()
-                    this.innerVisible=false
-                    this.dialogVisible = false
+            if (this.areaname == null) {
+                this.$message.error('请输入区域名称')
+            }
+            else {
+                const coordinates = {
+                    areaname: this.areaname,
+                    x1: this.sendPoints[0].x,
+                    y1: this.sendPoints[0].y,
+                    x2: this.sendPoints[1].x,
+                    y2: this.sendPoints[1].y,
+                    x3: this.sendPoints[2].x,
+                    y3: this.sendPoints[2].y,
+                    x4: this.sendPoints[3].x,
+                    y4: this.sendPoints[3].y,
+                };
+                // debugger
+
+
+                sendWA({
+                    x1: this.sendPoints[0].x,
+                    y1: this.sendPoints[0].y,
+                    x2: this.sendPoints[1].x,
+                    y2: this.sendPoints[1].y,
+                    x3: this.sendPoints[2].x,
+                    y3: this.sendPoints[2].y,
+                    x4: this.sendPoints[3].x,
+                    y4: this.sendPoints[3].y,
+                }).then(res => {
+                    addArea(coordinates).then(res => {
+                        this.$message.success('划定警戒区域成功')
+                        this.resetCanvas()
+                        this.innerVisible = false
+                        this.dialogVisible = false
+                    }).catch(error => {
+                        this.$message.error("划定警戒区域失败" + error)
+                    })
                 }).catch(error => {
-                    this.$message.error("划定警戒区域失败" + error)
+                    this.$message.error("传输失败" + error)
                 })
-            }).catch(error => {
-                this.$message.error("传输失败" + error)
-            })
+            }
+
         },
+
+        resizePs() {
+            console.log("resize")
+            const point = { x: '', y: '' }
+            for (const point of this.points) {
+                const resizedPoint = {
+                    x: (point.x / this.canvas.width * 640).toString(),
+                    y: (point.y / this.canvas.height * 480).toString(),
+                };
+                console.log("resized point", resizedPoint);
+                this.sendPoints.push(resizedPoint);
+            }
+            // this.points.array.forEach(element => {
+            //     point.x = (element.x / this.canvas.width * 640).toString();
+            //     point.y = (element.y / this.canvas.height * 480).toString();
+            //     console.log("resize point",point)
+            //     this.sendPoints.push(point)
+            // });
+            // for ()
+        }
     },
     mounted() {
         this.getArea()
@@ -220,12 +281,12 @@ canvas {
     left: 0;
 } */
 .canvas-container {
-  position: relative;
+    position: relative;
 }
 
 .canvas-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 </style>

@@ -37,22 +37,27 @@ export default {
             dialogVisible: false
         }
     },
+
     methods: {
         handleView(row) {
-            debugger
+            // debugger
             // 在这里处理查看按钮的点击事件，可以访问相应行的数据(row)
-            // console.log("查看行数据:", row);
-            this.dialogVisible = true
+            console.log("查看行数据:", row);
+            // this.dialogVisible = true
+
+            this.minute = row.minute
 
             getUrl({ path: row.video })
                 .then(res => {
                     this.src = res.data
                     this.dialogVisible = true
+                    this.jumpToMinute(this.minute)
 
                 }).catch(error => {
                     this.$message.error("获取数据失败：" + error);
                 })
         },
+
         jumpToMinute(minute) {
             // 将分钟转换为秒
             const targetTime = minute * 60;
@@ -61,6 +66,8 @@ export default {
         },
     },
     mounted() {
+        this.minute = ''; // 设置初始值为空
+
         getIRs().then(res => {
             this.tableData = res.data
         }).catch(error => {
@@ -68,7 +75,7 @@ export default {
         })
 
         this.$refs.videoPlayer.addEventListener('loadedmetadata', () => {
-            this.jumpToMinute(this.targetMinute);
+            this.jumpToMinute(this.minute);
         });
     }
 }

@@ -51,6 +51,8 @@
 
 <script>
 import MenuRouter from './MenuRouter.vue';
+import { logout } from '@/api/user';
+import { removeToken } from '@/utils/auth';
 
 export default {
     name: 'Layout',
@@ -64,12 +66,19 @@ export default {
         logout() {
             // alert('点击注销按钮')
             console.log('点击注销按钮')
-            debugger
-            this.$store.dispatch('user/logout').then(() => {
-                this.$router.push('/');
-                alert("注销成功")
-            }).catch(() => {
-                this.$message.error('注销失败');
+            // debugger
+            // this.$store.dispatch('user/logout').then(() => {
+            //     this.$router.push('/login');
+            //     alert("注销成功")
+            // }).catch(() => {
+            //     this.$message.error('注销失败');
+            // })
+            logout().then(()=>{
+                // removeToken()
+                this.$router.push('/login');
+                this.$message.success('注销成功')
+            }).catch(error=>{
+                this.$message.error("注销失败"+error)
             })
         },
     },

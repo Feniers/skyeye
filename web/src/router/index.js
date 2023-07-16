@@ -104,6 +104,7 @@ const routes = [
         name: '照片上传',
         menuType: '2',
         component: () => import('@/views/admin/ImgPush.vue')
+        // component: () => import('@/views/admin/ImgPushToQINIU.vue')
       },
       
 

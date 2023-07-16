@@ -8,13 +8,19 @@
                 <el-form-item label="姓名">
                     <el-input v-model="searchText.name" placeholder="name"></el-input>
                 </el-form-item>
-                <el-form-item label="权限">
+                <el-form-item label="昵称">
+                    <el-input v-model="searchText.nickname" placeholder="nickname"></el-input>
+                </el-form-item>
+                <el-form-item label="邮箱">
+                    <el-input v-model="searchText.email" placeholder="email"></el-input>
+                </el-form-item>
+                <!-- <el-form-item label="权限">
                     <el-select v-model="searchText.right" placeholder="right">
                         <el-option label="高级" value="0"></el-option>
                         <el-option label="中级" value="1"></el-option>
                         <el-option label="低级" value="2"></el-option>
                     </el-select>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item>
                     <el-button type="primary" @click="queryTable(searchText)">查询</el-button>
                 </el-form-item>
@@ -37,9 +43,7 @@
                     </template> -->
                 </el-table-column>
                 <el-table-column prop="email" label="邮箱" width="500">
-                    <!-- <template slot-scope="scope">
-                        {{ scope.row.gender == 1 ? '男' : '女' }}
-                    </template> -->
+                    <!-- <el-table-column prop="phone" label="" width="500"></el-table-column> -->
                 </el-table-column>
                 <!-- <el-table-column prop="job" label="职位" width="140"></el-table-column> -->
                 <!-- <el-table-column prop="right" label="权限"></el-table-column> -->

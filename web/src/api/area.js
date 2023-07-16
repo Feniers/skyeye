@@ -31,3 +31,19 @@ export function deleteArea(data) {
         data
     })
 }
+
+export function setPhoto(data) {
+    return request({
+        url: '/area/setphoto',
+        method: 'post',
+        data
+    })
+}
+
+export function getToken(data) {
+    return request({
+        url: '/area/gettoken',
+        method: 'post',
+        data
+    })
+}

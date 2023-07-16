@@ -1,104 +1,176 @@
 <template>
-  <div class="container">
-    <div class="upload-container">
-      <el-upload class="upload-demo" ref="upload" action="#" :on-preview="handlePreview" :on-remove="handleRemove"
-        :file-list="fileList" :auto-upload="false" :http-request="handleFileUpload">
-        <div class="button-container">
-          <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-          <el-input placeholder="请输入姓名" v-model="name" clearable style="width: 200px;"></el-input>
-          <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload"
-            :loading="loading">上传到服务器</el-button>
-        </div>
-
-        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-      </el-upload>
-    </div>
-
-    <el-dialog :visible.sync="dialogVisible">
-      <img width="100%" :src="dialogImageUrl" alt="">
-    </el-dialog>
+  <div class="ft-plant-upload-button">
+    <input type="text" v-model="name">
+    <Button type="ghost" icon="ios-cloud-upload-outline" @click="zh_uploadFile">选择文件</Button>
+    <!-- <input type="file" ref="evfile" @change="zh_uploadFile_change" > -->
+    <input type="file" ref="evfile" @change="zh_uploadFile_change" multiple style="display:none">
   </div>
 </template>
 
 
-
 <script>
-import { uploadUrl } from '@/api/vedio';
+//七牛上传插件
+import * as qiniu from 'qiniu-js';
+import { getToken, setPhoto } from '@/api/area'
+import { getUrl } from '@/api/vedio';
 
 export default {
   data() {
     return {
-      name: '啊',
-      dialogVisible: false,
-      dialogImageUrl: '',
-
-      loading: false,
-      fileList: []
-    };
+      name: "",
+      index: 1,
+      num: 4,
+      urls: []
+    }
   },
   methods: {
-    submitUpload() { this.$refs.upload.submit(); },
+    //选择上传文件
+    zh_uploadFile() {
+      this.$refs.evfile.click();
+    },
 
+    //选择文件后触发的事件
+    zh_uploadFile_change(evfile) {
+      //后端获取token
+      getToken().then(res => {
+        var uptoken = res.data.token
+        var file = evfile.target.files[0] //Blob 对象，上传的文件
+        var key = this.name + '/' + this.index  // 上传后文件资源名以设置的 key 为主，如果 key 为 null 或者 undefined，则文件资源名会以 hash 值作为资源名。
 
-    handleFileUpload(file) {
+        let config = {
+          useCdnDomain: true,   //表示是否使用 cdn 加速域名，为布尔值，true 表示使用，默认为 false。
+          // region: qiniu.region.z2     // 根据具体提示修改上传地区,当为 null 或 undefined 时，自动分析上传域名区域
+        };
 
-      console.log("上传", file)
-      this.loading = true;
-      //调用后端服务器的接口
-      const form = {
-        localpath: file.file.name,
-        path: this.name + file.file.name,
-      }
-      uploadUrl(form).then(res => {
-        this.$message.success('上传成功');
-        this.clearFiles();
-        this.name = null;
-        this.loading = false
+        let putExtra = {
+          fname: "",  //文件原文件名
+          params: {}, //用来放置自定义变量
+          mimeType: null  //用来限制上传文件类型，为 null 时表示不对文件类型限制；限制类型放到数组里： ["image/png", "image/jpeg", "image/gif"]
+        };
+        var observable = qiniu.upload(file, key, uptoken, putExtra, config);
+        observable.subscribe({
+          next: (result) => {
+            // 主要用来展示进度
+            // console.log(result)
+          },
+          error: (errResult) => {
+            // 失败报错信息
+            console.log(errResult)
+          },
+          complete: (result) => {
+            // 接收成功后返回的信息
+            this.urls.push(result.key)
+            console.log("urls", this.urls.length, this.urls)
+
+            // console.log("index", this.index)
+            this.index = this.index + 1
+            if (this.urls.length >= this.num) {
+              // if (this.url(this.name+'/') >= this.num) {
+              // this.sendMessage()
+              this.sendUrls()
+            }
+
+          }
+        })
       })
-        .catch(error => {
-          this.$message.error('上传失败' + error);
-        });
     },
 
-    clearFiles() {
-      this.fileList = [];
+    // sendUrls() {
+    //   const photos={
+    //     name:this.name,
+    //     photo1:this.url(this.urls[0]),
+    //     photo2:this.url(this.urls[1]),
+    //     // photo3:this.url(this.urls[2]),
+    //     // photo4:this.url(this.urls[3]),
+    //   }
+
+    //   setPhoto(photos).then(res => {
+    //     console.log("传输成功")
+    //     this.urls = []
+    //     this.index = 0
+    //     this.name = ''
+    //   }).catch(error => {
+    //     console.log("传输失败")
+    //   })
+    // },
+
+    // sendUrls() {
+    //   const promises = this.urls.map((url) => this.url(url))
+
+    //   Promise.all(promises)
+    //     .then((results) => {
+    //       const photos = {
+    //         name: this.name,
+    //         photo1: results[0],
+    //         photo2: results[1],
+    //         photo3: results[2],
+    //         photo4: results[3]
+    //       }
+    //       console.log(photos)
+    //       return setPhoto(photos)
+    //     })
+
+    //     .then(() => {
+    //       console.log("传输成功")
+    //       this.urls = []
+    //       this.index = 0
+    //       this.name = ''
+    //     })
+    //     .catch((error) => {
+    //       console.log("传输失败")
+    //     })
+    // },
+
+    // url(path) {
+    //   getUrl({ path: path }).then(res => {
+    //     return res.data
+    //     console.log(res.data)
+    //   }).catch(error => {
+    //     console.log("获取url失败", path)
+    //   })
+    // }
+
+    async sendUrls() {
+      try {
+        const photos = {
+          name: this.name,
+          photo1: await this.url(this.urls[0]),
+          photo2: await this.url(this.urls[1]),
+          photo3: await this.url(this.urls[2]),
+          photo4: await this.url(this.urls[3]),
+        }
+
+        await setPhoto(photos)
+        console.log("传输成功")
+        this.urls = []
+        this.index = 0
+        this.name = ''
+      } catch (error) {
+        console.log("传输失败")
+      }
     },
 
-    handleRemove(file, fileList) {
-      console.log("移除", file, fileList);
-    },
-
-    handlePreview(file) {
-      console.log("预览", file);
-      this.dialogImageUrl = file.name
-      this.dialogVisible = true
+    async url(path) {
+      try {
+        const res = await getUrl({ path: path })
+        console.log(res.data)
+        return res.data
+      } catch (error) {
+        console.log("获取url失败", path)
+        throw error
+      }
     }
+
   }
 }
 </script>
 
 <style scoped>
-.container {
-  display: flex;
+.ft-plant-upload-button {
+  position: fixed;
+  width: 50%;
+  height: 100%;
   justify-content: center;
   align-items: center;
-  height: 100%;
-}
-
-.upload-container {
-  text-align: center;
-
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
-
-.button-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 300px;
-  /* 调整宽度以适应布局 */
 }
 </style>

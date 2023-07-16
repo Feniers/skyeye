@@ -18,15 +18,15 @@
             <div class="container b-container" id="b-container">
                 <el-form ref="pwdRef" :model="pwdLoginForm" :rules="pwdLoginFormRules" class="form" id="b-form">
                     <h2 class="form_title title">登入账号</h2>
-                    <div class="form_icons">
+                    <!-- <div class="form_icons">
                         <i class="iconfont el-icon-user"></i>
                         <i class="iconfont el-icon-phone"></i>
                         <i class="iconfont el-icon-message"></i>
-                    </div>
-                    <span class="form_span">选择登录方式</span>
+                    </div> -->
+                    <!-- <span class="form_span">选择登录方式</span> -->
                     <input type="text" class="form_input" placeholder="name" v-model="pwdLoginForm.name">
                     <input type="text" class="form_input" placeholder="Password" v-model="pwdLoginForm.password">
-                    <a class="form_link">忘记密码？</a>
+                    <!-- <a class="form_link">忘记密码？</a> -->
                     <el-button class="form_button button submit" @click="pwdLogin">SIGN IN</el-button>
                 </el-form>
             </div>
@@ -133,8 +133,12 @@ export default {
                         password: this.regForm.pwd,
                         // cpwd: this.regForm.
                     }
+                    const userIN = {
+                        name: this.regForm.name,
+                        password: this.regForm.pwd,
+                    }
                     addUser(user).then(res => {
-                        debugger
+                        // debugger
                         console.log(res)
                         this.$message({
                             showClose: true,
@@ -143,13 +147,13 @@ export default {
                         })
                         setTimeout(() => {
                             //跳转
-                            this.$store.dispatch('user/login', this.pwdLoginForm).then(
+                            this.$store.dispatch('user/login', userIN).then(
                                 () => {
                                     // alert("登录成功!")
                                     this.$router.push('/home')
                                 }).catch(
                                     () => {
-                                        
+
                                     })
                         }, 2000)
                     }).catch(err => {
@@ -306,7 +310,7 @@ export default {
     align-items: center;
     position: absolute;
     top: 0;
-    /* width: 600px; */
+    width: 600px;
     height: 100%;
     padding: 25px;
     background-color: #ecf0f3;
