@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+// import { getToken } from '@/utils/auth'
+import { getToken } from './auth'
 
 // create an axios instance
 const request = axios.create({
@@ -19,7 +20,9 @@ request.interceptors.request.use(
       // let each request carry token
       // ['Token'] is a custom headers key
       // please modify it according to the actual situation
-      config.headers['Authorization'] = getToken()
+      // config.headers['Authorization'] = getToken()
+      config.headers.Authorization = getToken()
+      console.log("authorization", getToken())
     }
     config.headers["Content-Type"] = 'application/json';
     // config.headers["Access-Control-Allow-Origin"] = "http://localhost:9999/";
