@@ -101,9 +101,9 @@ const routes = [
       // },
       { //content页面--黑名单人员管理
         path: '/blist',
-        name: '黑名单人员管理',
+        name: '照片上传',
         menuType: '2',
-        component: () => import('@/views/admin/dangerImgPush.vue')
+        component: () => import('@/views/admin/ImgPush.vue')
       },
       
 

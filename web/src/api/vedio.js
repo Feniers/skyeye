@@ -25,3 +25,19 @@ export function getIRs(data) {
         data
     })
 }
+
+export function uploadUrl(data) {
+    return request({
+        url: '/save',
+        method: 'post',
+        data
+    })
+}
+
+export function deleteUrl(data) {
+    return request({
+        url: '/delete',
+        method: 'post',
+        data
+    })
+}

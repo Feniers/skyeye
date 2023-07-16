@@ -40,6 +40,7 @@ export default {
     }
 }
 </script>
+
 <style scoped>
 .player {
     background-color: black;

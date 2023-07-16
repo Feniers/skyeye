@@ -36,15 +36,15 @@ export default {
         return {
             videoInfo: [
                 { url: "", index: 0, name: "测试1" },
-                { url: "http://127.0.0.1:80/video_feed", index: 1, name: "测试1" },
-                { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded3180d81.m3u8", index: 2, name: "测试2" },
-                { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a7s25d84ded3180d81.m3u8", index: 3, name: "测试3" },
-                { url: "http://hls01open.ys7.com/openlive/b27fa374e9d749ddb22bs4a12e843a3131.m3u8", index: 10, name: "测试4" },
-                { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a7s2s5d84ded3180d8.m3u8", index: 4, name: "测试5" },
-                { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded3180d8.m3u8", index: 5, name: "测试6" },
-                { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded31280d8.m3u8", index: 6, name: "测试7" },
-                { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded33180d8.m3u8", index: 7, name: "测试8" },
-                { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded31480d8.m3u8", index: 8, name: "测试9" },
+                { url: "http://127.0.0.1:80/video_feed", index: 1, name: "guard" },
+                // { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded3180d81.m3u8", index: 2, name: "测试2" },
+                // { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a7s25d84ded3180d81.m3u8", index: 3, name: "测试3" },
+                // { url: "http://hls01open.ys7.com/openlive/b27fa374e9d749ddb22bs4a12e843a3131.m3u8", index: 10, name: "测试4" },
+                // { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a7s2s5d84ded3180d8.m3u8", index: 4, name: "测试5" },
+                // { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded3180d8.m3u8", index: 5, name: "测试6" },
+                // { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded31280d8.m3u8", index: 6, name: "测试7" },
+                // { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded33180d8.m3u8", index: 7, name: "测试8" },
+                // { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded31480d8.m3u8", index: 8, name: "测试9" },
             ],
             cellCount: 1
         }

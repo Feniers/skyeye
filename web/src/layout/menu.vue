@@ -98,7 +98,7 @@ export default {
 
 <style scoped>
 .home-container {
-    height: 100vh;
+    height: 98vh;
     /* 设置容器的高度为视口高度 */
     width: 100%;
     /* 设置容器的宽度为 100% */
@@ -120,7 +120,8 @@ export default {
 }
 
 .main {
-    flex: 1;
+    /* flex: 1; */
+    height: 100%;
     /* 占据剩余空间 */
     /* overflow: hidden; */
     overflow: auto;

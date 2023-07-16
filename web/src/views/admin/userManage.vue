@@ -29,14 +29,14 @@
         <div class="table">
             <el-table :data="tableData" border style="width: 100%">
                 <el-table-column label="序号" type="index" width="100"> </el-table-column>
-                <el-table-column prop="id" label="id"></el-table-column>
-                <el-table-column prop="name" label="用户名" width="300"></el-table-column>
+                <el-table-column prop="id" label="id" width="150"></el-table-column>
+                <el-table-column prop="name" label="用户名" width="200"></el-table-column>
                 <el-table-column prop="nickname" label="昵称" width="180">
                     <!-- <template slot-scope="scope">
                         <img :src="scope.row.image" width="100px" height="70px">
                     </template> -->
                 </el-table-column>
-                <el-table-column prop="email" label="邮箱" width="140">
+                <el-table-column prop="email" label="邮箱" width="500">
                     <!-- <template slot-scope="scope">
                         {{ scope.row.gender == 1 ? '男' : '女' }}
                     </template> -->
@@ -45,7 +45,7 @@
                 <!-- <el-table-column prop="right" label="权限"></el-table-column> -->
                 <!-- <el-table-column prop="updatetime" label="最后操作时间" width="230"></el-table-column> -->
                 <el-table-column label="操作" flex-direction:row>
-                    <template slot-scope="scope">
+                    <template slot-scope="scope" class="button-container">
                         <el-button type="primary" @click="handleClick(scope.row)" size="mini">编辑</el-button>
                         <el-button type="danger" @click="deleteUser(scope.row)" size="mini">删除</el-button>
                     </template>
@@ -335,8 +335,8 @@ export default {
 }
 
 .main-container {
-    width: 100vw;
-    height: 100vh;
+    // width: 100vw;
+    height: 100%;
     display: flex; 
     overflow: hidden;
     display: flex;
@@ -345,6 +345,11 @@ export default {
     // align-items: center;
     /* 在交叉轴上居中对齐 */
 
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
 }
 
 .el-header {

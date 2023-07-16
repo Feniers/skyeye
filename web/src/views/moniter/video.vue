@@ -1,19 +1,16 @@
 <template>
     <div class="cell">
-        <!-- <div>
-            <img :src="src" alt="hhh" >
-        </div> -->
 
         <div class="cell-player">
             <div :class="cellClass(i)" v-for="i in cellCount" :key="i">
                 <playVideo :video="videoInfo[i]" v-if="cellCount != 6"></playVideo>
-                <playVideo :video="videoInfo[i]" v-if="cellCount == 6 && i != 2 && i != 3"></playVideo>
+                <!-- <playVideo :video="videoInfo[i]" v-if="cellCount == 6 && i != 2 && i != 3"></playVideo>
                 <template v-if="cellCount == 6 && i == 2">
                     <div class="cell-player-6-2-cell">
                         <playVideo :video="videoInfo[i]"></playVideo>
                         <playVideo :video="videoInfo[++i]"></playVideo>
                     </div>
-                </template>
+                </template> -->
             </div>
         </div>
         
@@ -21,9 +18,9 @@
             <div class="bk-button-group">
                 <el-button @click="cellCount = 1" size="small">1</el-button>
                 <el-button @click="cellCount = 4" size="small">4</el-button>
-                <el-button @click="cellCount = 6" size="small">6</el-button>
+                <!-- <el-button @click="cellCount = 6" size="small">6</el-button>
                 <el-button @click="cellCount = 9" size="small">9</el-button>
-                <el-button @click="cellCount = 16" size="small">16</el-button>
+                <el-button @click="cellCount = 16" size="small">16</el-button> -->
             </div>
         </div>
     </div>
@@ -41,15 +38,10 @@ export default {
             // src: "http://rxh8bkp1a.hd-bkt.clouddn.com/video7.mp4?e=1688964653&token=8O1Cf39AS9FKQjhWkMi2sFH2pkSXgF8O38XREvzH:vSLOgJLXO7LWOVdOmTa5PHdur_Q=",
             videoInfo: [
                 { url: "", index: 0, name: "测试1" },
-                { url: "http://i-2.gpushare.com:58614/video_feed", index: 1, name: "测试1" },
-                { url: "http://i-1.gpushare.com:52553/video_feed", index: 2, name: "测试2" },
-                { url: "http://i-2.gpushare.com:21421/video_feed", index: 3, name: "测试3" },
-                { url: "http://i-2.gpushare.com:25314/video_feed", index: 10, name: "测试4" },
-                // { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a7s2s5d84ded3180d8.m3u8", index: 4, name: "测试5" },
-                // { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded3180d8.m3u8", index: 5, name: "测试6" },
-                // { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded31280d8.m3u8", index: 6, name: "测试7" },
-                // { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded33180d8.m3u8", index: 7, name: "测试8" },
-                // { url: "http://hls01open.ys7.com/openlive/699a3134f0864d81a725sd84ded31480d8.m3u8", index: 8, name: "测试9" },
+                { url: "http://i-2.gpushare.com:25314/video_feed", index: 1, name: "reid1" },
+                { url: "http://i-1.gpushare.com:52553//video_feed", index: 2, name: "reid2" },
+                { url: "http://192.168.43.216:80/video_feed", index: 3, name: "reid3" },
+                { url: "http://192.168.43.232:80/video_feed", index: 10, name: "reid4" },
             ],
             cellCount: 4
         }
@@ -92,6 +84,7 @@ export default {
 
 .cell-player {
     flex: 1;
+    height: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -154,6 +147,7 @@ export default {
     display: flex;
     flex-direction: column;
     height: 100%;
+    /* overflow: hidden; */
 }
 </style>
   

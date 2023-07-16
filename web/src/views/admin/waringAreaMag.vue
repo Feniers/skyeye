@@ -32,9 +32,10 @@
         <!-- </div> -->
 
         <el-dialog :data="rowInfo" :visible.sync="dialogVisible" class="dialog" height="100%">
-            <div>
+            <div class="canvas-container">
                 <img src="../assets/moniter.jpg" ref="image" @load="initializeCanvas" style="width: 100%;" />
-                <canvas ref="canvas" @mousedown="startDrawing" @mouseup="endDrawing" @mousemove="drawRectangle"></canvas>
+                <canvas class="canvas-overlay" ref="canvas" @mousedown="startDrawing" @mouseup="endDrawing"
+                    @mousemove="drawRectangle"></canvas>
             </div>
             <div v-if="showCanves == true">
 
@@ -57,37 +58,6 @@
                 </el-dialog>
             </div>
         </el-dialog>
-
-        <!-- <el-dialog :data="rowInfo" :visible.sync="dialogVisible" class="dialog" height="100%">
-            <el-row>
-            <el-col :span="20" class="image-container">
-                <img src="../assets/background.jpg" ref="image" @load="initializeCanvas" style="width: 100%;" />
-                <canvas ref="canvas" @mousedown="startDrawing" @mouseup="endDrawing" @mousemove="drawRectangle"></canvas>
-                <el-button type="danger" size="medium" @click="deleteArea">删 除</el-button>
-                <el-button type="info" size="medium" @click="dialogVisible = false">取 消</el-button>
-            </el-col> -->
-
-        <!-- <el-col :span="3" class="buttonList">
-                    <el-button-group direction="vertical">
-                        <el-button type="primary" size="medium" @click="drowArea">划定警戒区</el-button>
-                        <el-button type="primary" size="medium" @click="resetCanvas">重置画板</el-button>
-                        <el-button type="primary" size="medium" @click="innerVisible = true">提交警戒区</el-button>
-                        <br>
-                        <el-button type="danger" size="medium" @click="deleteArea">删 除</el-button>
-                        <el-button type="info" size="medium" @click="dialogVisible = false">取 消</el-button>
-                    </el-button-group>
-
-                    <el-dialog width="30%" :visible.sync="innerVisible" append-to-body>
-                        <el-input placeholder="请设置区域名称" v-model="areaname" clearable>
-                        </el-input>
-                        <br>
-                        <el-button type="primary" size="medium" @click="sendRectangleCoordinates">提交</el-button>
-                    </el-dialog>
-                </el-col> -->
-        <!-- </el-row> -->
-        <!-- </el-dialog> -->
-
-        <!-- <el-dialog :visible.sync="dialogVisible" class="dialog" height="100%"> -->
     </div>
 </template>
 
@@ -152,7 +122,7 @@ export default {
             console.log("rowInfo " + this.rowInfo)
             // const rect = this.canvas.getBoundingClientRect();
             // this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            this.initializeCanvas()
+            // this.initializeCanvas()
             this.ctx.strokeRect(row.x1, row.y1, row.x2 - row.x1, row.y2 - row.y1);
         },
 
@@ -202,25 +172,27 @@ export default {
         },
         //提交绘制
         sendRectangleCoordinates() {
-            // 将对角坐标发送给后端
+            debugger
             const coordinates = {
                 areaname: this.areaname,
                 // x1: this.startX.toString(),
-                x1: (this.startX / this.canvas.width * 640).toString,
-                y1: (this.startY / this.canvas.height * 480).toString,
-                x2: (this.endX / this.canvas.width * 640).toString,
-                y2: (this.endY / this.canvas.height * 480).toString,
+                x1: (this.startX / this.canvas.width * 640).toString(),
+                y1: (this.startY / this.canvas.height * 480).toString(),
+                x2: (this.endX / this.canvas.width * 640).toString(),
+                y2: (this.endY / this.canvas.height * 480).toString(),
             };
+            // debugger
 
             sendWA({
-                x1: (this.startX / this.canvas.width * 640).toString,
-                y1: (this.startY / this.canvas.height * 480).toString,
-                x2: (this.endX / this.canvas.width * 640).toString,
-                y2: (this.endY / this.canvas.height * 480).toString,
+                x1: (this.startX / this.canvas.width * 640).toString(),
+                y1: (this.startY / this.canvas.height * 480).toString(),
+                x2: (this.endX / this.canvas.width * 640).toString(),
+                y2: (this.endY / this.canvas.height * 480).toString(),
             }).then(res => {
                 addArea(coordinates).then(res => {
                     this.$message.success('划定警戒区域成功')
                     this.resetCanvas()
+                    this.innerVisible=false
                     this.dialogVisible = false
                 }).catch(error => {
                     this.$message.error("划定警戒区域失败" + error)
@@ -238,24 +210,7 @@ export default {
 </script>
 
 <style>
-/* .button-row {
-    display: flex;
-    justify-content: space-evenly;
-} */
-
-/* .video-container {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.showImg {
-    width: 100%;
-    height: 100%;
-    border: 1px solid white;
-    color: white;
-    text-align: center;
-} */
-.image-container {
+/* .image-container {
     position: relative;
 }
 
@@ -263,29 +218,14 @@ canvas {
     position: absolute;
     top: 0;
     left: 0;
-}
-
-/* 
-.dialog-content {
-    display: flex;
-}
-
-.image-container {
-    flex: 1;
-    position: relative;
-}
-
-.button-list {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding-left: 20px;
-    /* 调整按钮与图片的间距 */
-/* }
-
-.button-list::before {
-    content: '';
-    flex: 1;
 } */
+.canvas-container {
+  position: relative;
+}
+
+.canvas-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 </style>
