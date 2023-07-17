@@ -35,7 +35,7 @@ export default {
       getToken().then(res => {
         var uptoken = res.data.token
         var file = evfile.target.files[0] //Blob 对象，上传的文件
-        var key = this.name + '/' + this.index  // 上传后文件资源名以设置的 key 为主，如果 key 为 null 或者 undefined，则文件资源名会以 hash 值作为资源名。
+        var key = this.name + '/' + file.name  // 上传后文件资源名以设置的 key 为主，如果 key 为 null 或者 undefined，则文件资源名会以 hash 值作为资源名。
 
         let config = {
           useCdnDomain: true,   //表示是否使用 cdn 加速域名，为布尔值，true 表示使用，默认为 false。

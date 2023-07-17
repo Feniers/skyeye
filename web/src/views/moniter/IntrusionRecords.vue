@@ -51,7 +51,7 @@ export default {
                 .then(res => {
                     this.src = res.data
                     this.dialogVisible = true
-                    this.jumpToMinute(this.minute)
+                    // this.jumpToMinute(this.minute)
 
                 }).catch(error => {
                     this.$message.error("获取数据失败：" + error);

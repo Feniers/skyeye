@@ -38,10 +38,14 @@ export default {
             // src: "http://rxh8bkp1a.hd-bkt.clouddn.com/video7.mp4?e=1688964653&token=8O1Cf39AS9FKQjhWkMi2sFH2pkSXgF8O38XREvzH:vSLOgJLXO7LWOVdOmTa5PHdur_Q=",
             videoInfo: [
                 { url: "", index: 0, name: "测试1" },
+                // http://i-2.gpushare.com:44214/lab
+                // { url: "http://i-2.gpushare.com:44214/video_feed", index: 1, name: "reid1" },
                 { url: "http://i-2.gpushare.com:25314/video_feed", index: 1, name: "reid1" },
                 { url: "http://i-1.gpushare.com:52553//video_feed", index: 2, name: "reid2" },
                 { url: "http://192.168.43.216:80/video_feed", index: 3, name: "reid3" },
                 { url: "http://192.168.43.232:80/video_feed", index: 10, name: "reid4" },
+                // { url: "http://127.0.0.1:80/video_feed", index: 3, name: "reid3" },
+                // { url: "http://127.0.0.1:80/video_feed", index: 10, name: "reid4" },
             ],
             cellCount: 4
         }

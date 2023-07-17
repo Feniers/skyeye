@@ -79,8 +79,8 @@ export default {
                 // { label: '列3', key: 'md5' }
             ], // 列配置数组
 
-            breadcrumbItems:[
-                {label:'all',path:''},
+            breadcrumbItems: [
+                { label: 'all', path: '' },
             ]
         }
     },
@@ -89,36 +89,56 @@ export default {
 
         },
 
+        // getDirectory(dir) {
+        //     directory({ prefix: dir }).then(res => {
+        //         // debugger
+        //         // this.dirList=res.data
+        //         // this.tableData = res.data
+        //         // console.log('dirlist:' + this.tableData.length)
+
+        //         // this.getDirectory();
+        //         // console.log('init dirlist:' + this.dirList.length)
+        //         const data = res.data
+        //         const regex = /^\d+_\d+\/$/;
+        //         const filteredData = [];
+
+        //         for (const item of data) {
+        //             // if (typeof item.key === 'string' && regex.test(item.key)) {
+        //             //     filteredData.push(item);
+        //             // }
+        //             if (item.key.endsWith('.mp4')) {
+        //                 continue
+        //             } else {
+        //                 filteredData.push(item);
+        //             }
+        //         }
+
+        //         // debugger
+        //         this.tableData = filteredData;
+
+        //     }).catch(error => {
+        //         this.$message.error("获取数据失败：" + error);
+        //     })
+        // },
         getDirectory(dir) {
-            directory({ prefix: dir }).then(res => {
-                // debugger
-                // this.dirList=res.data
-                // this.tableData = res.data
-                // console.log('dirlist:' + this.tableData.length)
+            debugger
+            directory({ prefix: dir })
+                .then(res => {
+                    const data = res.data;
+                    const filteredData = [];
 
-                // this.getDirectory();
-                // console.log('init dirlist:' + this.dirList.length)
-                const data = res.data
-                const regex = /^\d+_\d+\/$/;
-                const filteredData = [];
-
-                for (const item of data) {
-                    // if (typeof item.key === 'string' && regex.test(item.key)) {
-                    //     filteredData.push(item);
-                    // }
-                    if (item.key.endsWith('.mp4')) {
-                        continue
-                    } else {
-                        filteredData.push(item);
+                    for (const item of data) {
+                        // Check if the item key ends with ".mp4" or not in the form of "数字_数字/"
+                        if (/^\d+_\d+\//.test(item.key)) {
+                            filteredData.push(item);
+                        }
                     }
-                }
 
-                // debugger
-                this.tableData = filteredData;
-
-            }).catch(error => {
-                this.$message.error("获取数据失败：" + error);
-            })
+                    this.tableData = filteredData;
+                })
+                .catch(error => {
+                    this.$message.error("获取数据失败：" + error);
+                });
         },
 
         handleView(row) {
@@ -138,7 +158,7 @@ export default {
                 // this.getDirectory(row.key)
                 directory({ prefix: row.key }).then(res => {
                     //面包屑
-                    this.breadcrumbItems.push({label:row.key,path:row.key})
+                    this.breadcrumbItems.push({ label: row.key, path: row.key })
 
                     const data = res.data;
 

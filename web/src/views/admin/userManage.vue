@@ -16,9 +16,9 @@
                 </el-form-item>
                 <!-- <el-form-item label="权限">
                     <el-select v-model="searchText.right" placeholder="right">
-                        <el-option label="高级" value="0"></el-option>
-                        <el-option label="中级" value="1"></el-option>
-                        <el-option label="低级" value="2"></el-option>
+                        <el-option label="管理员" value=[0]></el-option>
+                        <el-option label="工作人员" value=[1]></el-option>
+                        <el-option label="浏览人员" value=[2]></el-option>
                     </el-select>
                 </el-form-item> -->
                 <el-form-item>
@@ -38,10 +38,19 @@
                 <el-table-column prop="id" label="id" width="150"></el-table-column>
                 <el-table-column prop="name" label="用户名" width="200"></el-table-column>
                 <el-table-column prop="nickname" label="昵称" width="180">
+
                     <!-- <template slot-scope="scope">
                         <img :src="scope.row.image" width="100px" height="70px">
                     </template> -->
                 </el-table-column>
+                <!-- <el-table-column label="权限" width="180">
+                    
+                    改了这里
+                    <template slot-scope="scope">
+                        <div v-if="scope.row.right.includes(0)">管理员</div>
+                        <div v-else-if="scope.row.right.includes(1)">工作人员</div>
+                    </template>
+                </el-table-column> -->
                 <el-table-column prop="email" label="邮箱" width="500">
                     <!-- <el-table-column prop="phone" label="" width="500"></el-table-column> -->
                 </el-table-column>
@@ -71,7 +80,7 @@
         <el-dialog title="修改用户信息" :visible.sync="dialogChangeVisible">
             <el-form :model="form">
                 <el-form-item label="姓名" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.userName" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="昵称" :label-width="formLabelWidth">
                     <el-input v-model="form.nickname" autocomplete="off"></el-input>
@@ -79,13 +88,18 @@
                 <el-form-item label="邮箱" :label-width="formLabelWidth">
                     <el-input v-model="form.email" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="权限" :label-width="formLabelWidth">
+                <!-- <el-form-item label="电话" :label-width="formLabelWidth">
+                    <el-input v-model="form.phone" autocomplete="off"></el-input>
+                </el-form-item> -->
+                <!-- <el-form-item label="权限" :label-width="formLabelWidth">
+                    改了这里
                     <el-select v-model="form.right" placeholder="请选择权限">
-                        <el-option label="管理员" value="0"></el-option>
-                        <el-option label="员工" value="1"></el-option>
-                        <el-option label="浏览人员" value="2"></el-option>
+                        <el-option label="管理员" value=[0]></el-option>
+                        <el-option label="员工" value=[0]></el-option>
+                        <el-option label="浏览人员" value=[0]></el-option>
                     </el-select>
-                </el-form-item>
+
+                </el-form-item> -->
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogChangeVisible = false">取 消</el-button>
@@ -261,7 +275,17 @@ export default {
             this.dialogChangeVisible = true;
         },
         changeUser() {
-            changeUser(this.form)
+            const sendChangeUser={
+                name:this.form.userName,
+                nickname:this.form.nickname,
+                email: this.form.email,
+                id: this.form.userId,
+                // right: '',
+                // phone:'',
+                // user_role:'',
+                // userface:'',
+            }
+            changeUser(sendChangeUser)
                 .then(res => {
                     this.$message({
                         showClose: true,
@@ -341,7 +365,7 @@ export default {
 .main-container {
     // width: 100vw;
     height: 100%;
-    display: flex; 
+    display: flex;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -352,8 +376,8 @@ export default {
 }
 
 .button-container {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 .el-header {

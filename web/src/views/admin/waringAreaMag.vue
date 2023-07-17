@@ -26,14 +26,13 @@
 
 
         <el-dialog :data="rowInfo" :visible.sync="dialogVisible" class="dialog" height="100%">
-            <div class="canvas-container">
+            <div class="canvas-container" ref="shot">
                 <img src="http://127.0.0.1:80/video_feed" ref="image" @load="initializeCanvas" style="width: 100%;" />
                 <!-- <canvas class="canvas-overlay" ref="canvas" @mousedown="startDrawing" @mouseup="endDrawing"
                     @mousemove="drawRectangle"></canvas> -->
                 <canvas class="canvas-overlay" ref="canvas" @mousedown="handleMouseDown"></canvas>
             </div>
             <div v-if="showCanves == true">
-
                 <el-button type="primary" @click="resetCanvas">重置画板</el-button>
                 <el-button type="primary" @click="innerVisible = true">提交警戒区</el-button>
                 <!-- <el-button type="info" size="medium" @click="dialogVisible = false;">取 消</el-button> -->
