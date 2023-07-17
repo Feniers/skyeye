@@ -25,7 +25,7 @@
                     </div> -->
                     <!-- <span class="form_span">选择登录方式</span> -->
                     <input type="text" class="form_input" placeholder="name" v-model="pwdLoginForm.name">
-                    <input type="text" class="form_input" placeholder="Password" v-model="pwdLoginForm.password">
+                    <input type="password" class="form_input" placeholder="Password" v-model="pwdLoginForm.password">
                     <!-- <a class="form_link">忘记密码？</a> -->
                     <el-button class="form_button button submit" @click="pwdLogin">SIGN IN</el-button>
                 </el-form>
@@ -83,13 +83,14 @@ export default {
             },
 
             regForm: {
-                name: '杨东海',
-                nickname: 'Adonis',
+                name: '元一份',
+                nickname: 'yyf',
                 email: '2728455509@qq.com',
                 phone: '18787566829',
                 pwd: '123456q',
                 cpwd: '123456q',
             },
+            
             regFormRules: {
                 name: [{ required: true, type: 'string', message: '请输入姓名', trigger: 'blur' }],
                 nickname: [{ required: true, type: 'string', message: '请输入昵称', trigger: 'blur' }],
